@@ -1,4 +1,4 @@
-# Dojo BE - Backend C# ASP.NET Core Web API
+# Blazor App - Backend C# ASP.NET Core Web API + Blazor FE
 
 This project is a backend solution for a Courses API, built with Clean Code and Clean Architecture principles in C# using ASP.NET Core. It allows teachers to create courses and students to view and learn from them.
 
