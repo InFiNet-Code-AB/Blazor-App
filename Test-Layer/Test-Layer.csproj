@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API-Layer\API-Layer.csproj" />
     <ProjectReference Include="..\Application-Layer\Application-Layer.csproj" />
     <ProjectReference Include="..\Infrastructure-Layer\Infrastructure-Layer.csproj" />
   </ItemGroup>
