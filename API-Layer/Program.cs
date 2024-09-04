@@ -7,6 +7,7 @@ using Infrastructure_Layer.DatabaseHelper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
@@ -21,9 +22,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontEndDevServer",
         builder =>
         {
-            builder.WithOrigins("http://localhost:5173")
+            builder.WithOrigins("https://localhost:7158")//blazor https address
+                  .AllowAnyMethod()
                   .AllowAnyHeader()
-                  .AllowAnyMethod();
+                  .WithHeaders(HeaderNames.ContentType);
         });
 });
 

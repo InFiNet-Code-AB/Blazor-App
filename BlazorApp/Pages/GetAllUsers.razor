@@ -1,0 +1,79 @@
+﻿@page "/users"
+@using Shared_Layer.ApiServices
+@using Domain_Layer.Models.User
+@inject IUserServices ApiService;
+
+<PageTitle> Get All Users </PageTitle>
+<h3>Users</h3>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (result == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Role</th>
+                <th>Is Deleted</th>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Normalized User Name</th>
+                <th>Email</th>
+                <th>Normalized Email</th>
+                <th>Email Confirmed</th>
+                <th>Password Hash</th>
+                <th>Security Stamp</th>
+                <th>Concurrency Stamp</th>
+                <th>Phone Number</th>
+                <th>Phone Number Confirmed</th>
+                <th>Two-Factor Enabled</th>
+                <th>Lockout End</th>
+                <th>Lockout Enabled</th>
+                <th>Access Failed Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in result)
+            {
+                <tr>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Role</td>
+                    <td>@user.IsDeleted</td>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.NormalizedUserName</td>
+                    <td>@user.Email</td>
+                    <td>@user.NormalizedEmail</td>
+                    <td>@user.EmailConfirmed.ToString()</td>
+                    <td>@user.PasswordHash</td>
+                    <td>@user.SecurityStamp</td>
+                    <td>@user.ConcurrencyStamp</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.PhoneNumberConfirmed.ToString()</td>
+                    <td>@user.TwoFactorEnabled.ToString()</td>
+                    <td>@user.LockoutEnd.ToString() ?? "N/A"</td>
+                    <td>@user.LockoutEnabled.ToString()</td>
+                    <td>@user.AccessFailedCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    UserModel model = new();
+    IEnumerable<UserModel> result;
+    protected override async Task OnInitializedAsync()
+    {
+        result = await ApiService.GetAllUsersAsync();
+    }
+
+}
