@@ -13,12 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test-Layer", "Test-Layer\Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation-Layer", "Presentation-Layer", "{49717DCB-05B2-4309-A955-C72462D7D5B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{20385379-FC15-40A8-B6DA-FF4B53EA7F30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{20385379-FC15-40A8-B6DA-FF4B53EA7F30}"
 	ProjectSection(ProjectDependencies) = postProject
 		{02B45866-F2FB-4622-B377-57A2A44CF034} = {02B45866-F2FB-4622-B377-57A2A44CF034}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared-Layer", "Shared-Layer\Shared-Layer.csproj", "{02B45866-F2FB-4622-B377-57A2A44CF034}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared-Layer", "Shared-Layer\Shared-Layer.csproj", "{02B45866-F2FB-4622-B377-57A2A44CF034}"
 	ProjectSection(ProjectDependencies) = postProject
 		{249CA95C-BD83-41DC-8E76-F136A517F5EE} = {249CA95C-BD83-41DC-8E76-F136A517F5EE}
 	EndProjectSection
@@ -58,7 +58,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0EC4C48B-46BD-4183-9953-DA29D2F1BD46} = {49717DCB-05B2-4309-A955-C72462D7D5B9}
 		{20385379-FC15-40A8-B6DA-FF4B53EA7F30} = {49717DCB-05B2-4309-A955-C72462D7D5B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
