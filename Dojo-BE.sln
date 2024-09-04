@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain-Layer", "Domain-Laye
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure-Layer", "Infrastructure-Layer\Infrastructure-Layer.csproj", "{84EE79A9-DB67-4269-8505-68E2E53330CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test-Layer", "Test-Layer\Test-Layer.csproj", "{DC196A30-F8E1-410D-826A-21CD608D4581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test-Layer", "Test-Layer\Test-Layer.csproj", "{DC196A30-F8E1-410D-826A-21CD608D4581}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation-Layer", "Presentation-Layer", "{49717DCB-05B2-4309-A955-C72462D7D5B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{20385379-FC15-40A8-B6DA-FF4B53EA7F30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +43,17 @@ Global
 		{DC196A30-F8E1-410D-826A-21CD608D4581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC196A30-F8E1-410D-826A-21CD608D4581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC196A30-F8E1-410D-826A-21CD608D4581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20385379-FC15-40A8-B6DA-FF4B53EA7F30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20385379-FC15-40A8-B6DA-FF4B53EA7F30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20385379-FC15-40A8-B6DA-FF4B53EA7F30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20385379-FC15-40A8-B6DA-FF4B53EA7F30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0EC4C48B-46BD-4183-9953-DA29D2F1BD46} = {49717DCB-05B2-4309-A955-C72462D7D5B9}
+		{20385379-FC15-40A8-B6DA-FF4B53EA7F30} = {49717DCB-05B2-4309-A955-C72462D7D5B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD2B064-6E41-4D84-A990-528C3EAAE3C3}
