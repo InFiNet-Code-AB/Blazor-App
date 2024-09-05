@@ -1,12 +1,12 @@
 ﻿using System.Security.Claims;
 using Application_Layer.Commands.UpdateUser;
 using Application_Layer.Controllers;
-using Application_Layer.DTO_s;
 using Domain_Layer.Models.User;
 using FakeItEasy;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.User;
 
 namespace Test_Layer.UserTest.IntegrationTests
 {

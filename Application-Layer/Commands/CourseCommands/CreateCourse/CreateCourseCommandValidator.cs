@@ -1,5 +1,4 @@
-﻿using Application_Layer.DTO_s;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Application_Layer.Commands.CourseCommands.CreateCourse
 {

@@ -1,5 +1,6 @@
 ﻿
-namespace Application_Layer.DTO_s.Content
+
+namespace Shared_Layer.DTO_s.Content
 {
     public class CreateContentDTO
     {

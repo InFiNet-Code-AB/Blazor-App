@@ -1,5 +1,5 @@
-﻿using Application_Layer.DTO_s.Module;
-using MediatR;
+﻿using MediatR;
+using Shared_Layer.DTO_s.Module;
 
 namespace Application_Layer.Commands.ModuleCommands.CreateModule
 {

@@ -1,11 +1,11 @@
 ﻿using Application_Layer.Commands.ModuleCommands.CreateModule;
 using Application_Layer.Commands.ModuleCommands.DeleteModule;
 using Application_Layer.Commands.ModuleCommands.UpdateModule;
-using Application_Layer.DTO_s.Module;
 using Application_Layer.Queries.ModuleQueries.GetAllModulesByCourse;
 using Application_Layer.Queries.ModuleQueries.GetModuleById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Module;
 
 namespace API_Layer.Controllers
 {

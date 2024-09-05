@@ -1,9 +1,9 @@
 ﻿using Application_Layer.Commands.ModuleCommands.CreateModule;
-using Application_Layer.DTO_s.Module;
 using AutoMapper;
 using Domain_Layer.Models.Module;
 using FakeItEasy;
 using Infrastructure_Layer.Repositories.Module;
+using Shared_Layer.DTO_s.Module;
 
 namespace Test_Layer.ModuleTest.UnitTest.ModuleCommandTest
 {

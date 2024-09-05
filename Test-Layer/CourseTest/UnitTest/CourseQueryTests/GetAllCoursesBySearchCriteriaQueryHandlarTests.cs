@@ -9,7 +9,6 @@ namespace Test_Layer.CourseTest.UnitTest.CourseQueryTests
     [TestFixture]
     public class GetAllCoursesBySearchCriteriaQueryHandlarTests
     {
-
         private ICourseRepository _courseRepository;
         private GetAllCoursesBySearchCriteriaQueryHandler _handler;
         private SearchCriteria? _searchCriteria;

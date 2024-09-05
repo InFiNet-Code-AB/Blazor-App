@@ -1,9 +1,7 @@
 ﻿using Application_Layer.Commands.ContentCommands;
-using Application_Layer.Commands.ModuleCommands.CreateModule;
-using Application_Layer.DTO_s.Content;
-using Application_Layer.DTO_s.Module;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Content;
 
 namespace API_Layer.Controllers
 {

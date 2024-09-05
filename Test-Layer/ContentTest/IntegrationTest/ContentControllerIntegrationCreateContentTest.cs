@@ -1,10 +1,10 @@
 ﻿using API_Layer.Controllers;
 using Application_Layer.Commands.ContentCommands;
-using Application_Layer.DTO_s.Content;
 using Domain_Layer.CommandOperationResult;
 using FakeItEasy;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Content;
 
 namespace Test_Layer.ContentTest.IntegrationTest
 {

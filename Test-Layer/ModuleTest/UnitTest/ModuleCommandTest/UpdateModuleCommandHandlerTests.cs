@@ -1,11 +1,11 @@
 ﻿using Application_Layer.Commands.ModuleCommands.UpdateModule;
-using Application_Layer.DTO_s.Module;
 using AutoMapper;
 using Domain_Layer.Models.Module;
 using FakeItEasy;
 using FluentAssertions;
 using Infrastructure_Layer.Repositories.Module;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Module;
 
 
 namespace Test_Layer.ModuleTest.UnitTest.ModuleCommandTest

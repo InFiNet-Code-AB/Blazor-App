@@ -1,5 +1,4 @@
-﻿
-using Domain_Layer.Models.User;
+﻿using Domain_Layer.Models.User;
 
 namespace Shared_Layer.ApiServices
 {

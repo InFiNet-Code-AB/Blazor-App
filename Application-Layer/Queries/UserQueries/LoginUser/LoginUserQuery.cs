@@ -1,5 +1,5 @@
-﻿using Application_Layer.DTO_s;
-using MediatR;
+﻿using MediatR;
+using Shared_Layer.DTO_s.User;
 
 namespace Application_Layer.Queries.LoginUser
 {

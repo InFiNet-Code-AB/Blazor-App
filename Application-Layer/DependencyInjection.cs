@@ -1,9 +1,9 @@
-﻿using Application_Layer.AutoMaper;
-using Application_Layer.PipelineBehaviour;
+﻿using Application_Layer.PipelineBehaviour;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Application_Layer.AutoMapper;
 
 namespace Application_Layer
 {
