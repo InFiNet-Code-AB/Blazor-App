@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Test_Layer.ModuleTest.IntegrationTest
-{
+{//
     [TestFixture]
     public class ModuleControllerIntegrationTest
     {
