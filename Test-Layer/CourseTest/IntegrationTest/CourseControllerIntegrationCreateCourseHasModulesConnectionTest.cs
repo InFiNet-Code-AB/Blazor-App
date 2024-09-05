@@ -2,9 +2,7 @@
 using Application_Layer.Commands.CourseCommands.CreateCourseHasModuleConnection;
 using Domain_Layer.CommandOperationResult;
 using FakeItEasy;
-using FluentAssertions;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Test_Layer.CourseTest.IntegrationTest
