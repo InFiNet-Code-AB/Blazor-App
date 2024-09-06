@@ -70,7 +70,7 @@ else
 
 @code {
     UserModel model = new();
-    IEnumerable<UserModel> result;
+    IEnumerable<UserModel>? result;
     protected override async Task OnInitializedAsync()
     {
         result = await ApiService.GetAllUsersAsync();
