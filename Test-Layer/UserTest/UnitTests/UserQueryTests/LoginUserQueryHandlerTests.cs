@@ -1,10 +1,10 @@
-﻿using Application_Layer.DTO_s;
-using Application_Layer.Queries.LoginUser;
+﻿using Application_Layer.Queries.LoginUser;
 using Domain_Layer.Models.User;
 using FakeItEasy;
 using Infrastructure_Layer.Repositories.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Shared_Layer.DTO_s.User;
 
 namespace Test_Layer.UserTest.UnitTests.UserQueryTests
 {

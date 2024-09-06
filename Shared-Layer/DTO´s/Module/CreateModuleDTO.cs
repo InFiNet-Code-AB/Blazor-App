@@ -1,5 +1,5 @@
 ﻿
-namespace Application_Layer.DTO_s.Module
+namespace Shared_Layer.DTO_s.Module
 {
     public class CreateModuleDTO
     {

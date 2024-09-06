@@ -3,12 +3,12 @@ using Application_Layer.Commands.CourseCommands.CreateCourseHasModuleConnection;
 using Application_Layer.Commands.CourseCommands.DeleteCourse;
 using Application_Layer.Commands.CourseCommands.DeleteCourseHasModuleConnection;
 using Application_Layer.Commands.CourseCommands.UpdateCourse;
-using Application_Layer.DTO_s;
 using Application_Layer.Queries.CourseQueries.GetAllCoursesBySearchCriteria;
 using Application_Layer.Queries.CourseQueries.GetCourseById;
 using Domain_Layer.Models.Course;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Course;
 
 namespace API_Layer.Controllers
 {

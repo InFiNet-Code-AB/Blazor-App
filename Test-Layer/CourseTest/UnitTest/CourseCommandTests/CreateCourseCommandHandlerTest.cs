@@ -1,9 +1,9 @@
 ﻿using Application_Layer.Commands.CourseCommands;
-using Application_Layer.DTO_s;
 using AutoMapper;
 using Domain_Layer.Models.Course;
 using FakeItEasy;
 using Infrastructure_Layer.Repositories.Course;
+using Shared_Layer.DTO_s.Course;
 
 namespace Test_Layer.CourseTest.UnitTest.CourseCommandTests
 {

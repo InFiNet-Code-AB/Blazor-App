@@ -1,10 +1,10 @@
 ﻿using Application_Layer.Commands.UpdateUser;
-using Application_Layer.DTO_s;
 using AutoFixture;
 using AutoMapper;
 using Domain_Layer.Models.User;
 using FakeItEasy;
 using Infrastructure_Layer.Repositories.User;
+using Shared_Layer.DTO_s.User;
 
 namespace Test_Layer.UserTest.UnitTests.UserCommandTests
 {

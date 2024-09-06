@@ -1,11 +1,10 @@
-﻿
-using API_Layer.Controllers;
+﻿using API_Layer.Controllers;
 using Application_Layer.Commands.CourseCommands;
 using Application_Layer.Commands.CourseCommands.CreateCourse;
-using Application_Layer.DTO_s;
 using FakeItEasy;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Course;
 
 namespace Test_Layer.CourseTest.IntegrationTest
 {

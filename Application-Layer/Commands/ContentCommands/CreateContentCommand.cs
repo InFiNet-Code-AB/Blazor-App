@@ -1,6 +1,7 @@
-﻿using Application_Layer.DTO_s.Content;
-using Domain_Layer.CommandOperationResult;
+﻿using Domain_Layer.CommandOperationResult;
 using MediatR;
+using Shared_Layer.DTO_s.Content;
+
 
 namespace Application_Layer.Commands.ContentCommands
 {

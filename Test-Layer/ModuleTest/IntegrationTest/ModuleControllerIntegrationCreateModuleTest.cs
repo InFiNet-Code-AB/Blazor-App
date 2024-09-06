@@ -1,9 +1,10 @@
 ﻿using API_Layer.Controllers;
 using Application_Layer.Commands.ModuleCommands.CreateModule;
-using Application_Layer.DTO_s.Module;
 using FakeItEasy;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Module;
+
 
 namespace Test_Layer.ModuleTest.IntegrationTest
 {

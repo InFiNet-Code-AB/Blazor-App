@@ -1,13 +1,9 @@
 ﻿using Application_Layer.Commands.ContentCommands;
-using Application_Layer.Commands.ModuleCommands.CreateModule;
-using Application_Layer.DTO_s.Content;
-using Application_Layer.DTO_s.Module;
 using AutoMapper;
 using Domain_Layer.Models.Content;
-using Domain_Layer.Models.Module;
 using FakeItEasy;
 using Infrastructure_Layer.Repositories.Content;
-
+using Shared_Layer.DTO_s.Content;
 
 namespace Test_Layer.ContentTest.UnitTest.ContentCommandTest
 {

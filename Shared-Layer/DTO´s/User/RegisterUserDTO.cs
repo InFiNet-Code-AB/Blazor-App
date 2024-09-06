@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application_Layer.DTO_s
+namespace Shared_Layer.DTO_s.User
 {
     public class RegisterUserDTO
     {

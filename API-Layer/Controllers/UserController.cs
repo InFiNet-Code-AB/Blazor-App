@@ -2,7 +2,6 @@
 using Application_Layer.Commands.DeleteUser;
 using Application_Layer.Commands.RegisterNewUser;
 using Application_Layer.Commands.UpdateUser;
-using Application_Layer.DTO_s;
 using Application_Layer.Queries.GetAllUsers;
 using Application_Layer.Queries.GetUserByEmail;
 using Application_Layer.Queries.GetUserById;
@@ -10,6 +9,7 @@ using Application_Layer.Queries.LoginUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.User;
 namespace Application_Layer.Controllers
 {
     [Route("api/[controller]")]

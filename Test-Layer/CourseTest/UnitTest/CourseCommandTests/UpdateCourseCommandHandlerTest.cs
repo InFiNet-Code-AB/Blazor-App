@@ -1,11 +1,11 @@
 ﻿using Application_Layer.Commands.CourseCommands.UpdateCourse;
-using Application_Layer.DTO_s;
 using AutoMapper;
 using Domain_Layer.Models.Course;
 using FakeItEasy;
 using FluentAssertions;
 using Infrastructure_Layer.Repositories.Course;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Course;
 
 namespace Test_Layer.CourseTest.UnitTest.CourseCommandTests
 {

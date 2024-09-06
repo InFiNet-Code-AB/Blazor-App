@@ -1,4 +1,4 @@
-﻿using Application_Layer.AutoMaper;
+﻿using Application_Layer.AutoMapper;
 using Application_Layer.PipelineBehaviour;
 using AutoMapper;
 using FluentValidation;

@@ -1,5 +1,5 @@
 ﻿
-namespace Application_Layer.DTO_s
+namespace Shared_Layer.DTO_s.Course
 {
     public class CourseUpdateDTO
     {

@@ -1,6 +1,6 @@
-﻿using Application_Layer.DTO_s;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Layer.DTO_s.Course;
 
 namespace Application_Layer.Commands.CourseCommands.UpdateCourse
 {

@@ -1,13 +1,14 @@
-﻿using Application_Layer.DTO_s;
-using Application_Layer.DTO_s.Content;
-using Application_Layer.DTO_s.Module;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain_Layer.Models.Content;
 using Domain_Layer.Models.Course;
 using Domain_Layer.Models.Module;
 using Domain_Layer.Models.User;
+using Shared_Layer.DTO_s.Content;
+using Shared_Layer.DTO_s.Course;
+using Shared_Layer.DTO_s.Module;
+using Shared_Layer.DTO_s.User;
 
-namespace Application_Layer.AutoMaper
+namespace Application_Layer.AutoMapper
 {
     public class MappingProfiles : Profile
     {
