@@ -3,6 +3,8 @@ using Domain_Layer.Models.User;
 using Infrastructure_Layer.Repositories.User;
 using MediatR;
 
+
+
 namespace Application_Layer.Commands.RegisterNewUser
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, UserModel>

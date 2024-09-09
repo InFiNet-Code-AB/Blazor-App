@@ -1,0 +1,64 @@
+﻿@page "/register"
+@using Domain_Layer.CommandOperationResult
+@using Domain_Layer.Models.User
+@using Shared_Layer.DTO_s.User
+@using Shared_Layer.ApiServices
+@inject HttpClient Http
+@inject IUserServices ApiService;
+
+<h2>Register User</h2>
+
+<EditForm Model="@model" OnValidSubmit="HandleRegistration">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputSelect @bind-Value="model.Role" class="form-control mb-3">
+        <option value="" disabled selected>Role</option>
+        <option value="Teacher">Teacher</option>
+        <option value="Student">Student</option>
+    </InputSelect>
+    <InputText @bind-Value="model.FirstName" placeholder="First Name" class="form-control mb-3" />
+    <InputText @bind-Value="model.LastName" placeholder="Last Name" class="form-control mb-3" />
+    <InputText @bind-Value="model.Email" placeholder="Email" class="form-control mb-3" />
+    <InputText @bind-Value="model.Password" placeholder="Password" class="form-control mb-3" />
+    <InputText @bind-Value="model.ConfirmPassword" placeholder="Confirm Password" class="form-control mb-3" />
+    <button class="btn btn-primary mt-3">Submit</button>
+
+    @if (!string.IsNullOrEmpty(ResultMessage))
+    {
+        <div class="alert alert-danger">
+            <strong>Error:</strong> @ResultMessage
+        </div>
+    }
+   
+</EditForm>
+
+@code {
+    private RegisterUserDTO model = new();
+    //  private OperationResult<bool> Result = new();
+
+    private string ResultMessage;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Initialize form state if needed
+
+    }
+
+    private async Task HandleRegistration()
+    {
+        try
+        {
+            await ApiService.RegisterNewUserAsync(model);
+            model = new RegisterUserDTO();
+        }
+        catch(Exception ex)
+        {
+            ResultMessage = ex.Message;
+        }
+       
+    }
+
+}
+

@@ -1,5 +1,8 @@
 ﻿using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
+using Domain_Layer.CommandOperationResult;
 using Domain_Layer.Models.User;
+using Shared_Layer.DTO_s.User;
 
 namespace Shared_Layer.ApiServices
 {
@@ -36,10 +39,89 @@ namespace Shared_Layer.ApiServices
             throw new NotImplementedException();
         }
 
-        public Task<UserModel> RegisterUserAsync(UserModel newUser, string password, string role)
+        public async Task RegisterNewUserAsync(RegisterUserDTO newUser)
         {
-            throw new NotImplementedException();
+            var data = new
+            {
+                newUser.Role,
+                newUser.FirstName,
+                newUser.LastName,
+                newUser.Email,
+                newUser.Password,
+                newUser.ConfirmPassword
+            };
+            using (HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/User/register", data))
+            {
+                if (response.IsSuccessStatusCode == false) 
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
         }
+
+
+
+        //public async Task<UserModel> RegisterUserAsync(UserModel newUser, string password, string role)
+        //{
+
+        //    // var newUser = _mapper.Map<UserModel>(modelDtoUser);
+
+        //    try
+        //    {
+        //        var response = await _httpClient.PostAsJsonAsync("api/User/register", newUser);
+        //        var responseData = await response.Content.ReadFromJsonAsync<UserModel>();
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            return responseData; 
+        //        }
+        //        else
+        //        {
+        //            throw new Exception($"Failed to register user. Status code: {response.StatusCode}");
+        //        }
+        //    }
+        //    catch (HttpRequestException ex)
+        //    {
+        //        throw new Exception($"An error occurred while registering user: {ex.Message}");
+        //    }
+        //   // throw new NotImplementedException();
+        //}
+
+        public async Task<UserModel> RegisterUserAsync(RegisterUserDTO userDTO, string password, string role)
+        {
+            UserModel newUser = new UserModel() {
+                FirstName = userDTO.FirstName,
+                LastName = userDTO.LastName,
+                Email = userDTO.Email,
+                PasswordHash = password,
+                Role = role
+            };
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/User/register", newUser);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<UserModel>();
+                }
+                else
+                {
+                    throw new Exception($"Failed to register user. Status code: {response.StatusCode}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error registering user: {ex.Message}");
+                throw new Exception($"An error occurred while registering user: {ex.Message}");
+            }
+        }
+
+
+        //public async Task<UserModel> RegisterUserAsync(UserModel newUser)
+        //{
+        //    var data = await _httpClient.PostAsJsonAsync("api/User/register", newUser);
+        //    var response = await data.Content.ReadFromJsonAsync<UserModel>();
+        //    return response!;
+        //}
 
         public Task<UserModel> UpdateUserAsync(UserModel userToUpdate, string currentPassword, string newPassword)
         {
@@ -47,3 +129,4 @@ namespace Shared_Layer.ApiServices
         }
     }
 }
+
