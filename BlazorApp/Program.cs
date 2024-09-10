@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Shared_Layer;
 using Shared_Layer.ApiServices;
-
 namespace BlazorApp
 {
     public class Program

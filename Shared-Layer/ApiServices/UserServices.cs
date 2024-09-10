@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using Domain_Layer.Models.User;
+using Shared_Layer.DTO_s.User;
 
 namespace Shared_Layer.ApiServices
 {
@@ -36,9 +37,24 @@ namespace Shared_Layer.ApiServices
             throw new NotImplementedException();
         }
 
-        public Task<UserModel> RegisterUserAsync(UserModel newUser, string password, string role)
+        public async Task RegisterNewUserAsync(RegisterUserDTO newUser)
         {
-            throw new NotImplementedException();
+            var data = new
+            {
+                newUser.Role,
+                newUser.FirstName,
+                newUser.LastName,
+                newUser.Email,
+                newUser.Password,
+                newUser.ConfirmPassword
+            };
+            using (HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/User/register", data))
+            {
+                if (response.IsSuccessStatusCode == false)
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
         }
 
         public Task<UserModel> UpdateUserAsync(UserModel userToUpdate, string currentPassword, string newPassword)
@@ -47,3 +63,4 @@ namespace Shared_Layer.ApiServices
         }
     }
 }
+

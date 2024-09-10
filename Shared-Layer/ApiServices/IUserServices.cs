@@ -1,10 +1,11 @@
 ﻿using Domain_Layer.Models.User;
+using Shared_Layer.DTO_s.User;
 
 namespace Shared_Layer.ApiServices
 {
     public interface IUserServices
     {
-        Task<UserModel> RegisterUserAsync(UserModel newUser, string password, string role);
+        Task RegisterNewUserAsync(RegisterUserDTO newUser);
         Task<IEnumerable<UserModel>> GetAllUsersAsync();
         Task<UserModel> GetUserByEmailAsync(string email);
         Task<UserModel> GetUserByIdAsync(string userId);

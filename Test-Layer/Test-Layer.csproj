@@ -29,6 +29,7 @@
     <ProjectReference Include="..\API-Layer\API-Layer.csproj" />
     <ProjectReference Include="..\Application-Layer\Application-Layer.csproj" />
     <ProjectReference Include="..\Infrastructure-Layer\Infrastructure-Layer.csproj" />
+    <ProjectReference Include="..\Shared-Layer\Shared-Layer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
