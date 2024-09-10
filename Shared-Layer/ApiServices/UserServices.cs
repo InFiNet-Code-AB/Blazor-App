@@ -50,7 +50,7 @@ namespace Shared_Layer.ApiServices
             };
             using (HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/User/register", data))
             {
-                if (response.IsSuccessStatusCode == false) 
+                if (response.IsSuccessStatusCode == false)
                 {
                     throw new Exception(response.ReasonPhrase);
                 }
