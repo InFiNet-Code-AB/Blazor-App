@@ -24,20 +24,18 @@
     <InputText @bind-Value="model.ConfirmPassword" placeholder="Confirm Password" class="form-control mb-3" />
     <button class="btn btn-primary mt-3">Submit</button>
 
-    @if (!string.IsNullOrEmpty(ResultMessage))
+    @if (!string.IsNullOrWhiteSpace(errorMessage))
     {
         <div class="alert alert-danger">
-            <strong>Error:</strong> @ResultMessage
+            <strong>Error:</strong> @errorMessage
         </div>
-    }
-   
+    }   
 </EditForm>
 
 @code {
     private RegisterUserDTO model = new();
-    //  private OperationResult<bool> Result = new();
 
-    private string ResultMessage;
+    private string? errorMessage;
 
 
     protected override async Task OnInitializedAsync()
@@ -48,17 +46,16 @@
 
     private async Task HandleRegistration()
     {
+        errorMessage = "";
         try
         {
             await ApiService.RegisterNewUserAsync(model);
             model = new RegisterUserDTO();
+           
         }
         catch(Exception ex)
         {
-            ResultMessage = ex.Message;
-        }
-       
+            errorMessage = ex.Message;
+        }  
     }
-
 }
-
