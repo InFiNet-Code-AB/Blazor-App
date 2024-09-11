@@ -2,7 +2,7 @@
 using Domain_Layer.Models.User;
 using Shared_Layer.DTO_s.User;
 
-namespace Shared_Layer.ApiServices
+namespace Shared_Layer.ApiServices.User
 {
     public class UserServices : IUserServices
     {
@@ -48,7 +48,7 @@ namespace Shared_Layer.ApiServices
                 newUser.Password,
                 newUser.ConfirmPassword
             };
-            using (HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/User/register", data))
+            using (var response = await _httpClient.PostAsJsonAsync("api/User/register", data))
             {
                 if (response.IsSuccessStatusCode == false)
                 {
