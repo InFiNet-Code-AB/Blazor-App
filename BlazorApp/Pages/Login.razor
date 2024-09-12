@@ -1,0 +1,48 @@
+﻿@page "/login"
+@using Shared_Layer.DTO_s.User
+@using Shared_Layer.ApiServices.Authentication
+
+@inject IAuthService AuthService
+@inject NavigationManager NavManager
+
+<h3>Log In</h3>
+@if (showAuthenticationError)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>@authenticationErrorText</p>
+    </div>
+}
+<EditForm Model="model" OnValidSubmit="ExecuteLogin" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="col-form-label">
+        <InputText @bind-Value="model.Email" placeholder="E-mail" class="form-control mb-3" />
+    </div>
+    <div class="col-form-label">
+        <InputText @bind-Value="model.Password" placeholder="Password" class="form-control mb-3" />
+    </div>
+    <button class="btn btn-primary mt-3">Login</button>
+
+</EditForm>
+
+@code {
+    private LoginUserDTO model = new();
+    private bool showAuthenticationError = false;
+    private string authenticationErrorText = "";
+
+    private async Task ExecuteLogin()
+    {
+        var result = await AuthService.Login(model);
+
+        if (result)
+        {
+            NavManager.NavigateTo("/");
+        }
+        else
+        {
+            authenticationErrorText = "There was an error when trying to log in.";
+            showAuthenticationError = true;
+        }
+    }
+}

@@ -1,7 +1,7 @@
 ﻿using Domain_Layer.Models.User;
 using Shared_Layer.DTO_s.User;
 
-namespace Shared_Layer.ApiServices
+namespace Shared_Layer.ApiServices.UserCRUD
 {
     public interface IUserServices
     {

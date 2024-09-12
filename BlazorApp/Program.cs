@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Components.Web;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Shared_Layer;
-using Shared_Layer.ApiServices;
+using Shared_Layer.ApiServices.Authentication;
+using Shared_Layer.ApiServices.UserCRUD;
 namespace BlazorApp
 {
     public class Program
@@ -16,6 +17,9 @@ namespace BlazorApp
 
             //Add services IUserService,... from Shared-Layer
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+
+            builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();
         }

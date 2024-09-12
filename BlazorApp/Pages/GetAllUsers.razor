@@ -1,5 +1,5 @@
 ﻿@page "/users"
-@using Shared_Layer.ApiServices
+@using Shared_Layer.ApiServices.UserCRUD
 @using Domain_Layer.Models.User
 @inject IUserServices ApiService;
 
@@ -67,7 +67,6 @@ else
     </table>
 }
 
-
 @code {
     UserModel model = new();
     IEnumerable<UserModel>? result;
@@ -75,5 +74,4 @@ else
     {
         result = await ApiService.GetAllUsersAsync();
     }
-
 }
