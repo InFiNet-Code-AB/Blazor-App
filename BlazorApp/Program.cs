@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Shared_Layer.ApiServices.Authentication;
@@ -19,7 +20,12 @@ namespace BlazorApp
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IAuthService, AuthService>();
 
+            builder.Services.AddScoped<CustomAuthenticationStateProvider>();
+            builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthenticationStateProvider>());
+
             builder.Services.AddBlazoredLocalStorage();
+            // Enable Blazor's built-in authorization
+            builder.Services.AddAuthorizationCore();
 
             await builder.Build().RunAsync();
         }

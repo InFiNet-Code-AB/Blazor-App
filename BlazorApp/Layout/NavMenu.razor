@@ -1,4 +1,9 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using System.Security.Claims
+@inject Shared_Layer.ApiServices.Authentication.IAuthService AuthService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazorDojoFE</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -24,18 +29,44 @@
                 <span class=" bi bi-dash-square-fill" aria-hidden="true"></span> Logout
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="users">
-                <span class="bi bi-people-nested-nav-menu" aria-hidden="true"></span> Users
-            </NavLink>
-        </div>
+       
+        @if(isAdmin)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="users">
+                    <span class="bi bi-people-nested-nav-menu" aria-hidden="true"></span> Users
+                </NavLink>
+            </div>
+        }
+
     </nav>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
+    private bool isAdmin = false;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Subscribe to authentication state changes
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        UpdateUserRoles(authState.User);
+
+        AuthenticationStateProvider.AuthenticationStateChanged += async (task) =>
+        {
+            var newAuthState = await task;
+            UpdateUserRoles(newAuthState.User);
+            StateHasChanged();  // Trigger UI update
+        };
+      
+    }
+     private void UpdateUserRoles(ClaimsPrincipal user)
+    {
+        // Check the user roles
+        isAdmin = user.IsInRole("Admin");
+    }
 
     private void ToggleNavMenu()
     {

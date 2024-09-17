@@ -1,5 +1,7 @@
-﻿using System.Net.Http.Headers;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Security.Claims;
 using Blazored.LocalStorage;
 using Shared_Layer.DTO_s.User;
 
@@ -9,11 +11,15 @@ namespace Shared_Layer.ApiServices.Authentication
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
-        public AuthService(HttpClient httpClient, ILocalStorageService localStorage)
+        private readonly CustomAuthenticationStateProvider _authStateProvider;
+
+        public AuthService(HttpClient httpClient, ILocalStorageService localStorage, CustomAuthenticationStateProvider authStateProvider)
         {
             _httpClient = httpClient;
             _localStorage = localStorage;
+            _authStateProvider = authStateProvider;
         }
+
         public async Task<bool> Login(LoginUserDTO loginRequest)
         {
             var response = await _httpClient.PostAsJsonAsync("api/User/login", loginRequest);
@@ -22,8 +28,9 @@ namespace Shared_Layer.ApiServices.Authentication
             {
                 var loginResponse = await response.Content.ReadFromJsonAsync<LoginUserResponseDTO>();
 
-                // Save the token to local storage
                 await _localStorage.SetItemAsync("authToken", loginResponse.Token);
+
+                _authStateProvider.MarkUserAsAuthenticated(loginResponse.Token);
 
                 // Set the Authorization header for future requests
                 _httpClient.DefaultRequestHeaders.Authorization =
@@ -38,7 +45,12 @@ namespace Shared_Layer.ApiServices.Authentication
         public async Task Logout()
         {
             await _localStorage.RemoveItemAsync("authToken");
+
+            _authStateProvider.MarkUserAsLoggedOut();
+
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
     }
+
 }
+
