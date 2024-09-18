@@ -1,0 +1,30 @@
+﻿@page "/logout"
+@using Shared_Layer.ApiServices.Authentication
+@inject IAuthService AuthService
+@inject NavigationManager NavManager
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        <p>@errorMessage</p>
+    </div>
+}
+
+@code {
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await AuthService.Logout();
+            await InvokeAsync(() => NavManager.NavigateTo("/"));
+        }
+        catch (Exception ex)
+        {
+            // Log the exception
+            errorMessage = $"Error during logout: {ex.Message}";
+        }
+    }
+}
+
+
