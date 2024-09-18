@@ -101,3 +101,10 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+
+.custom-icon-size {
+    font-size: 10px; 
+    
+    text-align: center;
+    
+}
