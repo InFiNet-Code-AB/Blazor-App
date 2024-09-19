@@ -9,53 +9,57 @@
 
 <h2 class="text-center mt-5">Register New User</h2>
 
-<EditForm Model="@model" OnValidSubmit="HandleRegistration">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<div class="container mt-4">
+    <EditForm Model="@model" OnValidSubmit="HandleRegistration">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-    <div class="form-group">
-        <label for="role">Role</label>
-        <InputSelect id="role" @bind-Value="model.Role" class="form-control">
-            <option value="" disabled selected>Select Role</option>
-            <option value="Teacher">Teacher</option>
-            <option value="Student">Student</option>
-        </InputSelect>
-    </div>
-
-    <div class="form-group">
-        <label for="firstName">First Name</label>
-        <InputText id="firstName" @bind-Value="model.FirstName" class="form-control" placeholder="First Name" />
-    </div>
-
-    <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <InputText id="lastName" @bind-Value="model.LastName" class="form-control" placeholder="Last Name" />
-    </div>
-
-    <div class="form-group">
-        <label for="email">Email</label>
-        <InputText id="email" @bind-Value="model.Email" class="form-control" placeholder="Email" />
-    </div>
-
-    <div class="form-group">
-        <label for="password">Password</label>
-        <InputText id="password" type="password" @bind-Value="model.Password" class="form-control" placeholder="Password" />
-    </div>
-
-    <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <InputText id="confirmPassword" type="password" @bind-Value="model.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
-
-    @if (!string.IsNullOrWhiteSpace(errorMessage))
-    {
-        <div class="alert alert-danger mt-3">
-            <strong>Error:</strong> @errorMessage
+        <div class="form-group">
+            <label for="role">Role</label>
+            <InputSelect id="role" @bind-Value="model.Role" class="form-control">
+                <option value="" disabled selected>Select Role</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Student">Student</option>
+            </InputSelect>
         </div>
-    }
-</EditForm>
+
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <InputText id="firstName" @bind-Value="model.FirstName" class="form-control" placeholder="First Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <InputText id="lastName" @bind-Value="model.LastName" class="form-control" placeholder="Last Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <InputText id="email" @bind-Value="model.Email" class="form-control" placeholder="Email" />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText id="password" type="password" @bind-Value="model.Password" class="form-control" placeholder="Password" />
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <InputText id="confirmPassword" type="password" @bind-Value="model.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            <div class="alert alert-danger mt-3">
+                <strong>Error:</strong> @errorMessage
+            </div>
+        }
+    </EditForm>
+</div>
+
 
 @code {
     private RegisterUserDTO model = new();
