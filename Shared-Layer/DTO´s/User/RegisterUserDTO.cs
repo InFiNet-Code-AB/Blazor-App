@@ -4,11 +4,12 @@ namespace Shared_Layer.DTO_s.User
 {
     public class RegisterUserDTO
     {
-        [Required]
+        [Required(ErrorMessage = "Role is required.")]
         [RegularExpression(@"^(Teacher|Student)$", ErrorMessage = "Invalid role, you can choose between Teacher or Student.")]
         public string Role { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "First name is required.")]
+        [StringLength(50,ErrorMessage ="First can't be longer than 50 characters" )]
         public string FirstName { get; set; } = string.Empty;
 
         [Required]
