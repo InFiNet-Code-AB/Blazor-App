@@ -1,0 +1,95 @@
+﻿@page "/user-id"
+@using Domain_Layer.Models.User
+@using Shared_Layer.ApiServices.UserCRUD
+@using Shared_Layer.ApiServices.Authentication
+@inject IUserServices ApiService
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h3>Get User By Id</h3>
+<EditForm Model="model" OnValidSubmit="OnSubmit" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="col-form-label">
+        <InputText @bind-Value="model.Id" placeholder="Id" class="form-control mb-3" />
+    </div>
+    <button class="btn btn-primary mt-3">Get Users Data</button>
+</EditForm>
+
+@if (showError)
+{
+    <div class="alert alert-danger">
+        @errorMesage
+    </div>
+}
+
+@if (model != null && !string.IsNullOrEmpty(model.Id))
+{
+    <div class="container mt-5">
+        <table class="table table-bordered table-striped mt-4">
+
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Is Deleted</th>
+                    <th>Id</th>
+                    <th>User Name</th>               
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@model.FirstName</td>
+                    <td>@model.LastName</td>
+                    <td>@model.Role</td>
+                    <td>@model.IsDeleted</td>
+                    <td>@model.Id</td>
+                    <td>@model.UserName</td>          
+                    <td>@model.Email</td>            
+                    <td>@model.PhoneNumber</td>      
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private UserModel model = new();
+    private string? errorMesage;
+    private bool showError = false;
+    private bool isAdmin = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        isAdmin = user.IsInRole("Admin");
+
+        if (!isAdmin)
+        {
+            // Redirect to an unauthorized page or home
+            NavigationManager.NavigateTo("/unauthorized");
+        }
+        // Clear the model.Id value
+        model.Id = string.Empty; // Or set to null if that's preferred
+    }
+
+    private async Task OnSubmit()
+    {
+        try
+        {
+            // Fetch user data and assign it to the model
+            model = await ApiService.GetUserByIdAsync(model.Id);
+            showError = false;  // Clear error state if successful
+        }
+        catch (Exception ex)
+        {
+            showError = true;
+            errorMesage = $"There is a problem in fetching data for user with Id: {model.Id}. {ex.Message}";
+        }
+    }
+}

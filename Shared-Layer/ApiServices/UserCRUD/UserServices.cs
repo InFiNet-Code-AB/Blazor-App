@@ -34,7 +34,7 @@ namespace Shared_Layer.ApiServices.UserCRUD
 
         public Task<UserModel> GetUserByIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            return _httpClient.GetFromJsonAsync<UserModel>($"api/User/{userId}");
         }
 
         public async Task RegisterNewUserAsync(RegisterUserDTO newUser)
