@@ -5,6 +5,7 @@
 @using Shared_Layer.ApiServices
 @inject HttpClient Http
 @inject IUserServices ApiService;
+@inject NavigationManager Navigation;
 
 <h2 class="text-center mt-5">Register New User</h2>
 
@@ -75,7 +76,9 @@
         {
             await ApiService.RegisterNewUserAsync(model);
             model = new RegisterUserDTO();
-           
+            //Send user to login page optional = "/login"
+            Navigation.NavigateTo("/login");
+
         }
         catch(Exception ex)
         {
