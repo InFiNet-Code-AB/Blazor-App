@@ -1,0 +1,102 @@
+﻿.container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Adjust input field widths */
+.input-small {
+    width: 100%;
+    max-width: 150px;
+}
+
+.input-medium {
+    width: 100%;
+    max-width: 250px;
+}
+
+.input-large {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Style form groups and labels */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Existing styles */
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+h1:focus {
+    outline: none;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.form-control {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.3rem;
+    border: 1px solid #ccc;
+}
+
+    .form-control:focus {
+        border-color: #1b6ec2;
+        box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+    }
+
+.btn-primary {
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    border-radius: 0.3rem;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+    .btn-primary:hover {
+        background-color: #145ea8;
+    }
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border-radius: 0.3rem;
+}
+
+a, .btn-link {
+    color: #0071c1;
+}
+
+    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    }
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.validation-message {
+    color: red;
+    font-size: 0.9rem;
+}
+
+input[type="password"] {
+    font-family: sans-serif;
+}
