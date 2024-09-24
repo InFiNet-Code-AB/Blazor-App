@@ -5,8 +5,16 @@
 @using Shared_Layer.ApiServices.UserCRUD
 @inject HttpClient Http
 @inject IUserServices ApiService;
+@inject NavigationManager NavManager
 
 <h2>Register User</h2>
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error:</strong> @errorMessage
+    </div>
+}
 
 <EditForm Model="@model" OnValidSubmit="HandleRegistration" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
@@ -41,20 +49,12 @@
         <label for="firstName">Confirm Password</label>
     </div>
  
-    <button class="btn btn-primary mt-3">Submit</button>
-   
-
-    @if (!string.IsNullOrWhiteSpace(errorMessage))
-    {
-        <div class="alert alert-danger">
-            <strong>Error:</strong> @errorMessage
-        </div>
-    }   
+    <button class="btn btn-primary mt-3">Submit</button>  
 </EditForm>
 
 @code {
     private RegisterUserDTO model = new();
-
+    private bool success = false;
     private string? errorMessage;
 
 
@@ -69,9 +69,10 @@
         errorMessage = "";
         try
         {
-            await ApiService.RegisterNewUserAsync(model);
-            model = new RegisterUserDTO();
-           
+            await ApiService.RegisterNewUserAsync(model);    
+            model = new RegisterUserDTO();   
+            // Redirect to login page upon successful registration
+            NavManager.NavigateTo("/login");
         }
         catch(Exception ex)
         {

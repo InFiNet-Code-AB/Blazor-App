@@ -7,13 +7,22 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+
 <h3>Get User By Email</h3>
+
+@if (showError)
+{
+    <div class="alert alert-danger">
+        @errorMesage
+    </div>
+}
 
 <EditForm Model="model" OnValidSubmit="OnSubmit" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <div class="col-form-label">
-        <InputText @bind-Value="model.Email" placeholder="Email" class="form-control mb-3" />
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="model.Email" class="form-control" id="email" placeholder="Email" />
+        <label for="firstName">Email</label>
         <ValidationMessage For="@(() => model.Email)" />
     </div>
     <button class="btn btn-primary mt-3">Get Users Data</button>
@@ -27,13 +36,6 @@
             <span class="sr-only">Loading</span>
         </div>
         <p>Loading data, please wait...</p>
-    </div>
-}
-
-@if (showError)
-{
-    <div class="alert alert-danger">
-        @errorMesage
     </div>
 }
 
@@ -69,7 +71,6 @@
         </table>
     </div>
 }
-
 
 @code {
     private UserEmailDTO model = new();
@@ -116,5 +117,4 @@
             isLoading = false; // Stop loading
         }
     }
-
 }
