@@ -16,12 +16,18 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="col-form-label">
-        <InputText @bind-Value="model.Email" placeholder="E-mail" class="form-control mb-3" />
+   
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="model.Email" class="form-control" id="email" placeholder="Email" />
+        <label for="firstName">Email</label>
     </div>
-    <div class="col-form-label">
-        <InputText @bind-Value="model.Password" placeholder="Password" class="form-control mb-3" />
+   
+   
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="model.Password" class="form-control" id="password" placeholder="Password" />
+        <label for="firstName">Password</label>
     </div>
+   
     <button class="btn btn-primary mt-3">Login</button>
 
 </EditForm>

@@ -5,36 +5,56 @@
 @using Shared_Layer.ApiServices.UserCRUD
 @inject HttpClient Http
 @inject IUserServices ApiService;
+@inject NavigationManager NavManager
 
 <h2>Register User</h2>
 
-<EditForm Model="@model" OnValidSubmit="HandleRegistration">
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error:</strong> @errorMessage
+    </div>
+}
+
+<EditForm Model="@model" OnValidSubmit="HandleRegistration" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
+   
     <InputSelect @bind-Value="model.Role" class="form-control mb-3">
         <option value="" disabled selected>Role</option>
         <option value="Teacher">Teacher</option>
         <option value="Student">Student</option>
     </InputSelect>
-    <InputText @bind-Value="model.FirstName" placeholder="First Name" class="form-control mb-3" />
-    <InputText @bind-Value="model.LastName" placeholder="Last Name" class="form-control mb-3" />
-    <InputText @bind-Value="model.Email" placeholder="Email" class="form-control mb-3" />
-    <InputText @bind-Value="model.Password" placeholder="Password" class="form-control mb-3" />
-    <InputText @bind-Value="model.ConfirmPassword" placeholder="Confirm Password" class="form-control mb-3" />
-    <button class="btn btn-primary mt-3">Submit</button>
 
-    @if (!string.IsNullOrWhiteSpace(errorMessage))
-    {
-        <div class="alert alert-danger">
-            <strong>Error:</strong> @errorMessage
-        </div>
-    }   
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="model.FirstName" class="form-control" id="firstName" placeholder="First Name" />
+        <label for="firstName">First Name</label>
+    </div>
+  
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="model.LastName" class="form-control" id="lastName" placeholder="Last Name" />
+        <label for="firstName">Last Name</label>
+    </div>
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="model.Email" class="form-control" id="email" placeholder="Email" />
+        <label for="firstName">Email</label>
+    </div>
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="model.Password" class="form-control" id="password" placeholder="Password" />
+        <label for="firstName">Password</label>
+    </div>
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="model.ConfirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" />
+        <label for="firstName">Confirm Password</label>
+    </div>
+ 
+    <button class="btn btn-primary mt-3">Submit</button>  
 </EditForm>
 
 @code {
     private RegisterUserDTO model = new();
-
+    private bool success = false;
     private string? errorMessage;
 
 
@@ -49,9 +69,10 @@
         errorMessage = "";
         try
         {
-            await ApiService.RegisterNewUserAsync(model);
-            model = new RegisterUserDTO();
-           
+            await ApiService.RegisterNewUserAsync(model);    
+            model = new RegisterUserDTO();   
+            // Redirect to login page upon successful registration
+            NavManager.NavigateTo("/login");
         }
         catch(Exception ex)
         {
