@@ -1,4 +1,4 @@
-﻿@page "/user-id"
+﻿@page "/user-Email"
 @using Domain_Layer.Models.User
 @using Shared_Layer.ApiServices.UserCRUD
 @using Shared_Layer.ApiServices.Authentication
@@ -7,16 +7,18 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+<h3>Get User By Email</h3>
 
-<h3>Get User By Id</h3>
 <EditForm Model="model" OnValidSubmit="OnSubmit" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="col-form-label">
-        <InputText @bind-Value="model.Id" placeholder="Id" class="form-control mb-3" />
+        <InputText @bind-Value="model.Email" placeholder="Email" class="form-control mb-3" />
+        <ValidationMessage For="@(() => model.Email)" />
     </div>
     <button class="btn btn-primary mt-3">Get Users Data</button>
 </EditForm>
+
 @if (isLoading)
 {
     <div class="mt-4 text-center">
@@ -47,7 +49,7 @@
                     <th>Role</th>
                     <th>Is Deleted</th>
                     <th>Id</th>
-                    <th>User Name</th>               
+                    <th>User Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
                 </tr>
@@ -59,17 +61,18 @@
                     <td>@userModel.Role</td>
                     <td>@userModel.IsDeleted</td>
                     <td>@userModel.Id</td>
-                    <td>@userModel.UserName</td>          
-                    <td>@userModel.Email</td>            
-                    <td>@userModel.PhoneNumber</td>      
+                    <td>@userModel.UserName</td>
+                    <td>@userModel.Email</td>
+                    <td>@userModel.PhoneNumber</td>
                 </tr>
             </tbody>
         </table>
     </div>
 }
 
+
 @code {
-    private UserIdDTO model = new();
+    private UserEmailDTO model = new();
     private UserModel userModel;
     private string? errorMesage;
     private bool showError = false;
@@ -87,31 +90,31 @@
             // Redirect to an unauthorized page or home
             NavigationManager.NavigateTo("/unauthorized");
         }
-        // Clear the model.Id value
-       // model.Id = string.Empty; // Or set to null if that's preferred
-    }
 
+    }
     private async Task OnSubmit()
     {
         isLoading = true; // Set loading state to true
+   
         try
         {
-            // Simulate a delay for demonstration
+            // Simulate a delay for demonstration 
             //await Task.Delay(500);
 
             // Fetch user data and assign it to the model
-            userModel = await ApiService.GetUserByIdAsync(model.Id);
+            userModel = await ApiService.GetUserByEmailAsync(model.Email);
             showError = false;  // Clear error state if successful
             model = new();
         }
         catch (Exception ex)
         {
             showError = true;
-            errorMesage = $"There is a problem in fetching data for user with Id: {model.Id}. {ex.Message}";
+            errorMesage = $"There is a problem in fetching data for user with Email: {model.Email}. {ex.Message}";
         }
         finally
         {
             isLoading = false; // Stop loading
         }
     }
+
 }
