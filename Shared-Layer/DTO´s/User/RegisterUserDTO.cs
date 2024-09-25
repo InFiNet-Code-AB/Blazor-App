@@ -9,7 +9,7 @@ namespace Shared_Layer.DTO_s.User
         public string Role { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "First name is required.")]
-        [StringLength(50,ErrorMessage ="First can't be longer than 50 characters" )]
+        [StringLength(50, ErrorMessage = "First can't be longer than 50 characters")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required]
