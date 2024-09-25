@@ -7,76 +7,82 @@
 @inject IUserServices ApiService;
 @inject NavigationManager Navigation;
 
-<h2 class="text-center mt-5">Register New User</h2>
+<h2 class="text-center mt-5">Registration of user</h2>
+<h3 class="text-center mt-5"> fill in all fields to register user.</h3>
 
 <div class="container mt-4">
-    <EditForm Model="@model" OnValidSubmit="HandleRegistration">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <!-- Smaller width to the form wrapper -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Adjust the column width -->
+            <EditForm Model="@model" OnValidSubmit="HandleRegistration">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-        <div class="form-group">
-            <label for="role">Role</label>
-            <InputSelect id="role" @bind-Value="model.Role" class="form-control">
-                <option value="" disabled selected>Select Role</option>
-                <option value="Teacher">Teacher</option>
-                <option value="Student">Student</option>
-            </InputSelect>
-            <ValidationMessage For="@(() => model.Role)" />
+                <!-- Create a row for the form fields -->
+                <div class="row">
+
+                    <!-- Vänster Column -->
+                    <div class="col-md-6 d-flex flex-column justify-content-center">
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <InputSelect id="role" @bind-Value="model.Role" class="form-control">
+                                <option value="" disabled selected>Select Role</option>
+                                <option value="Teacher">Teacher</option>
+                                <option value="Student">Student</option>
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <InputText id="firstName" @bind-Value="model.FirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <InputText id="lastName" @bind-Value="model.LastName" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!-- Höger Column -->
+                    <div class="col-md-6 d-flex flex-column justify-content-center">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <InputText id="email" @bind-Value="model.Email" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <InputText id="password" type="password" @bind-Value="model.Password" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <InputText id="confirmPassword" type="password" @bind-Value="model.ConfirmPassword" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <div class="alert alert-danger mt-3 text-center">
+                        <strong>Error:</strong> @errorMessage
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(successMessage))
+                {
+                    <div class="alert alert-success mt-3 text-center">
+                        <strong>Success:</strong> @successMessage
+                    </div>
+                }
+            </EditForm>
         </div>
-
-        <div class="form-group">
-            <label for="firstName">First Name</label>
-            <InputText id="firstName" @bind-Value="model.FirstName" class="form-control" placeholder="First Name" />
-            <ValidationMessage For="@(() => model.FirstName)" />
-        </div>
-
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <InputText id="lastName" @bind-Value="model.LastName" class="form-control" placeholder="Last Name" />
-            <ValidationMessage For="@(() => model.LastName)" />
-
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email</label>
-            <InputText id="email" @bind-Value="model.Email" class="form-control" placeholder="Email" />
-            <ValidationMessage For="@(() => model.Email)" />
-
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <InputText id="password" type="password" @bind-Value="model.Password" class="form-control" placeholder="Password" />
-            <ValidationMessage For="@(() => model.Password)" />
-
-        </div>
-
-        <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <InputText id="confirmPassword" type="password" @bind-Value="model.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
-            <ValidationMessage For="@(() => model.ConfirmPassword)" />
-
-        </div>
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
-        </div>
-
-
-        @if (!string.IsNullOrWhiteSpace(errorMessage))
-        {
-            <div class="alert alert-danger mt-3">
-                <strong>Error:</strong> @errorMessage
-            </div>
-        }
-
-        @if (!string.IsNullOrWhiteSpace(successMessage))
-        {
-            <div class="alert alert-success mt-3">
-                <strong>Success:</strong> @successMessage
-            </div>
-        }
-    </EditForm>
+    </div>
 </div>
 
 @code {
