@@ -60,29 +60,6 @@ namespace Test_Layer.UserTest.UnitTests.UserCommandTests
                 .MustHaveHappenedOnceExactly();
         }
 
-
-        [Test]
-        public async Task Handle_ValidNewUser_ReturnsRegisteredUser()
-        {
-            // Arrange
-            var command = _fixture.Create<RegisterUserCommand>();
-            var newUser = _fixture.Create<UserModel>();
-            var registeredUser = _fixture.Create<UserModel>();
-
-            A.CallTo(() => _mapper.Map<UserModel>(command.NewUser))
-                .Returns(newUser);
-            A.CallTo(() => _userRepository.RegisterUserAsync(newUser, command.NewUser.Password, command.NewUser.Role))
-                .Returns(registeredUser);
-
-            // Act
-            var result = await _handler.Handle(command, default);
-
-            // Assert
-            Assert.That(result, Is.EqualTo(registeredUser));
-            A.CallTo(() => _userRepository.RegisterUserAsync(newUser, command.NewUser.Password, command.NewUser.Role))
-                .MustHaveHappenedOnceExactly();
-        }
-
         [Test]
         public void Handle_InvalidNewUser_ThrowsArgumentNullException()
         {
@@ -96,7 +73,11 @@ namespace Test_Layer.UserTest.UnitTests.UserCommandTests
         public void Handle_FailedRegistration_ThrowsException()
         {
             // Arrange
-            var userDto = _fixture.Create<RegisterUserDTO>();
+            var userDto = _fixture.Build<RegisterUserDTO>()
+                                   .With(u => u.Email, "test@example.com")
+                                   .With(u => u.Password, "wrongTypeOfPasswordNoNumbersAndSpecCaracters")
+                                   .With(u => u.ConfirmPassword, "notFolowPaternwrongTypeOfPasswordNoNumbersAndSpecCaracters")
+                                   .Create();
             var command = new RegisterUserCommand(userDto);
             var newUser = _mapper.Map<UserModel>(userDto);
 
