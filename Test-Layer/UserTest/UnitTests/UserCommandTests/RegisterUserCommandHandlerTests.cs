@@ -1,5 +1,6 @@
 ﻿using Application_Layer.Commands.RegisterNewUser;
 using AutoFixture;
+using AutoFixture.DataAnnotations;
 using AutoMapper;
 using Domain_Layer.Models.User;
 using FakeItEasy;
@@ -23,6 +24,8 @@ namespace Test_Layer.UserTest.UnitTests.UserCommandTests
             _mapper = A.Fake<IMapper>();
             _handler = new RegisterUserCommandHandler(_userRepository, _mapper);
             _fixture = new Fixture();
+            _fixture.Customize(new NoDataAnnotationsCustomization());
+
         }
 
         [Test]
