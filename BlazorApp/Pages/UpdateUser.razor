@@ -1,0 +1,86 @@
+﻿@page "/update-user"
+
+@using Domain_Layer.Models.User
+@using Shared_Layer.DTO_s.User
+@using Shared_Layer.ApiServices
+@inject NavigationManager Navigation
+@inject IUserServices UserService
+@inject HttpClient Http
+
+<h2>Update User</h2>
+
+<EditForm Model="@updatingUserModel" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" />
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <InputText id="email" class="form-control" @bind-Value="updatingUserModel.Email" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="currentPassword">Current Password</label>
+                    <InputText id="currentPassword" class="form-control" type="password" @bind-Value="updatingUserModel.CurrentPassword" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="newPassword">New Password</label>
+                    <InputText id="newPassword" class="form-control" type="password" @bind-Value="updatingUserModel.NewPassword" />
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <InputSelect id="role" @bind-Value="updatingUserModel.Role" class="form-control">
+                    <option value="">Select a role</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Student">Student</option>
+                    <option value="Admin">Admin</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => updatingUserModel.Role)" />
+    </div>
+                <div class="form-group mb-3">
+                    <label for="firstName">First Name</label>
+                    <InputText id="firstName" class="form-control" @bind-Value="updatingUserModel.FirstName" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="lastName">Last Name</label>
+                    <InputText id="lastName" class="form-control" @bind-Value="updatingUserModel.LastName" />
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+                </div>
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger mt-3" role="alert">
+                        @errorMessage
+                    </div>
+                }
+            </EditForm>
+      
+@code {
+    private UpdatingUserDTO updatingUserModel = new UpdatingUserDTO();
+    private string errorMessage = "";
+    protected override async Task OnInitializedAsync()
+    {
+        // Replace with actual logic to get the user's email
+        var currentUserEmail = "currentuser@example.com";
+        var currentUser = await UserService.GetUserByEmailAsync(currentUserEmail);
+        if (currentUser != null)
+        {
+            updatingUserModel.Email = currentUser.Email;
+            updatingUserModel.FirstName = currentUser.FirstName;
+            updatingUserModel.LastName = currentUser.LastName;
+            updatingUserModel.Role = currentUser.Role;
+        }
+    }
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            var result = await UserService.UpdateUserAsync(new UserModel { } /* Fill with necessary data */,
+                updatingUserModel.CurrentPassword, updatingUserModel.NewPassword
+            );
+            Navigation.NavigateTo("/profile-updated");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+}

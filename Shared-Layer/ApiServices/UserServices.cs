@@ -27,9 +27,9 @@ namespace Shared_Layer.ApiServices
             return await _httpClient.GetFromJsonAsync<List<UserModel>>("api/User/GetAllUsers");
         }
 
-        public Task<UserModel> GetUserByEmailAsync(string email)
+         public async Task<UserModel> GetUserByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<UserModel>($"api/User/GetUserByEmail/{email}");
         }
 
         public Task<UserModel> GetUserByIdAsync(string userId)
@@ -57,10 +57,30 @@ namespace Shared_Layer.ApiServices
             }
         }
 
-        public Task<UserModel> UpdateUserAsync(UserModel userToUpdate, string currentPassword, string newPassword)
+        public async Task<UserModel> UpdateUserAsync(UserModel userToUpdate, string currentPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            var data = new UpdatingUserDTO
+            {
+                Email = userToUpdate.Email,
+                FirstName = userToUpdate.FirstName,
+                LastName = userToUpdate.LastName,
+                Role = userToUpdate.Role,
+                CurrentPassword = currentPassword,
+                NewPassword = newPassword
+            };
+            using (HttpResponseMessage response = await _httpClient.PutAsJsonAsync("api/User/updateUser", data))
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error updating user: {response.StatusCode} - {errorMessage}");
+                }
+                // Om uppdateringen lyckas, kan vi kanske hämta den uppdaterade användaren om det behövs
+                return userToUpdate; // eller kanske returnera något mer relevant baserat på svaret
+            }
         }
     }
 }
+    
+
 
