@@ -1,0 +1,55 @@
+﻿@page "/delete-user"
+@inject HttpClient Http
+@using System.Net.Http.Json
+
+
+
+<h3>DeleteUser</h3>
+
+<EditForm model="deleteUserModel OnValidSubmit="HandleDeleteUser">
+    <DataAnnotationsValidator />
+
+    <div>
+        <label for="userId">User ID:</label>
+        <InputText id="userId" @bind-Value="@deleteUserModel.UserId"></InputText>
+    </div>
+
+    <button type="submit">Delete User</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p>@message</p>
+}
+
+
+
+
+@code {
+
+    private DeleteUserModel deleteUserModel = new DeleteUserModel();
+    private string message;
+
+    private async Task HandleDeleteUser()
+    {
+        try
+        {
+            //calling the API to delete the user
+            var response = await Http.DeleteAsync($"api/deleteUser/{deleteUserModel.UserID}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                message = " User Successfully Deleted!";
+            }
+            else
+            {
+                message = "Failed to delete user. " + await response.Content.ReadAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            message = $"Error: {ex.Message}";
+        }
+    }
+
+}
