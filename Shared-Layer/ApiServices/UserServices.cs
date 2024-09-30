@@ -57,16 +57,16 @@ namespace Shared_Layer.ApiServices
             }
         }
 
-        public async Task<UserModel> UpdateUserAsync(UserModel userToUpdate, string currentPassword, string newPassword)
+        public async Task UpdateUserAsync(UpdatingUserDTO updatedUser)
         {
             var data = new UpdatingUserDTO
             {
-                Email = userToUpdate.Email,
-                FirstName = userToUpdate.FirstName,
-                LastName = userToUpdate.LastName,
-                Role = userToUpdate.Role,
-                CurrentPassword = currentPassword,
-                NewPassword = newPassword
+                Email = updatedUser.Email,
+                FirstName = updatedUser.FirstName,
+                LastName = updatedUser.LastName,
+                Role = updatedUser.Role,
+                CurrentPassword = updatedUser.CurrentPassword,
+                NewPassword = updatedUser.NewPassword,
             };
             using (HttpResponseMessage response = await _httpClient.PutAsJsonAsync("api/User/updateUser", data))
             {
@@ -75,8 +75,7 @@ namespace Shared_Layer.ApiServices
                     var errorMessage = await response.Content.ReadAsStringAsync();
                     throw new Exception($"Error updating user: {response.StatusCode} - {errorMessage}");
                 }
-                // Om uppdateringen lyckas, kan vi kanske hämta den uppdaterade användaren om det behövs
-                return userToUpdate; // eller kanske returnera något mer relevant baserat på svaret
+
             }
         }
     }

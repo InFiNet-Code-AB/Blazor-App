@@ -54,28 +54,21 @@
             </EditForm>
       
 @code {
+
     private UpdatingUserDTO updatingUserModel = new UpdatingUserDTO();
     private string errorMessage = "";
+
+
     protected override async Task OnInitializedAsync()
     {
-        // Replace with actual logic to get the user's email
-        var currentUserEmail = "currentuser@example.com";
-        var currentUser = await UserService.GetUserByEmailAsync(currentUserEmail);
-        if (currentUser != null)
-        {
-            updatingUserModel.Email = currentUser.Email;
-            updatingUserModel.FirstName = currentUser.FirstName;
-            updatingUserModel.LastName = currentUser.LastName;
-            updatingUserModel.Role = currentUser.Role;
-        }
     }
+
+
     private async Task HandleValidSubmit()
     {
         try
         {
-            var result = await UserService.UpdateUserAsync(new UserModel { } /* Fill with necessary data */,
-                updatingUserModel.CurrentPassword, updatingUserModel.NewPassword
-            );
+            await UserService.UpdateUserAsync(updatingUserModel);
             Navigation.NavigateTo("/profile-updated");
         }
         catch (Exception ex)
