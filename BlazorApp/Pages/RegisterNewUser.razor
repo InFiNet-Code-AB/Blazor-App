@@ -5,57 +5,118 @@
 @using Shared_Layer.ApiServices
 @inject HttpClient Http
 @inject IUserServices ApiService;
+@inject NavigationManager Navigation;
 
-<h2>Register User</h2>
+<h2 class="text-center mt-5">Registration of user</h2>
+<h3 class="text-center mt-5"> fill in all fields to register user.</h3>
 
-<EditForm Model="@model" OnValidSubmit="HandleRegistration">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<div class="container mt-4">
+    <!-- Smaller width to the form wrapper -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Adjust column width -->
+            <EditForm Model="@model" OnValidSubmit="HandleRegistration">
+                <DataAnnotationsValidator />
 
-    <InputSelect @bind-Value="model.Role" class="form-control mb-3">
-        <option value="" disabled selected>Role</option>
-        <option value="Teacher">Teacher</option>
-        <option value="Student">Student</option>
-    </InputSelect>
-    <InputText @bind-Value="model.FirstName" placeholder="First Name" class="form-control mb-3" />
-    <InputText @bind-Value="model.LastName" placeholder="Last Name" class="form-control mb-3" />
-    <InputText @bind-Value="model.Email" placeholder="Email" class="form-control mb-3" />
-    <InputText @bind-Value="model.Password" placeholder="Password" class="form-control mb-3" />
-    <InputText @bind-Value="model.ConfirmPassword" placeholder="Confirm Password" class="form-control mb-3" />
-    <button class="btn btn-primary mt-3">Submit</button>
+                <!-- Create a row for the form fields -->
+                <div class="row">
 
-    @if (!string.IsNullOrWhiteSpace(errorMessage))
-    {
-        <div class="alert alert-danger">
-            <strong>Error:</strong> @errorMessage
+                    <!-- Vänster Column -->
+                    <div class="col-md-6 d-flex flex-column justify-content-center">
+                        <div class="mb-3">
+                            <label for="role">Role</label>
+                            <InputSelect id="role" @bind-Value="model.Role" class="form-control">
+                                <option value="" disabled selected>Select Role</option>
+                                <option value="Teacher">Teacher</option>
+                                <option value="Student">Student</option>
+                            </InputSelect>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="firstName">First Name</label>
+                            <InputText id="firstName" @bind-Value="model.FirstName" class="form-control" />
+                            <ValidationMessage For="@(() => model.FirstName)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="lastName">Last Name</label>
+                            <InputText id="lastName" @bind-Value="model.LastName" class="form-control" />
+                            <ValidationMessage For="@(() => model.LastName)" />
+                        </div>
+                    </div>
+
+                    <!-- Höger Column -->
+                    <div class="col-md-6 d-flex flex-column justify-content-center">
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <InputText id="email" @bind-Value="model.Email" class="form-control" />
+                            <ValidationMessage For="@(() => model.Email)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password">Password</label>
+                            <InputText id="password" type="password" @bind-Value="model.Password" class="form-control" />
+                            <ValidationMessage For="@(() => model.Password)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <InputText id="confirmPassword" type="password" @bind-Value="model.ConfirmPassword" class="form-control" />
+                            <ValidationMessage For="@(() => model.ConfirmPassword)" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <div class="alert alert-danger mt-3 text-center">
+                        <strong>Error:</strong> @errorMessage
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(successMessage))
+                {
+                    <div class="alert alert-success mt-3 text-center">
+                        <strong>Success:</strong> @successMessage
+                    </div>
+                }
+            </EditForm>
         </div>
-    }   
-</EditForm>
+    </div>
+</div>
 
 @code {
-    private RegisterUserDTO model = new();
-
+    private RegisterUserDTO model = new RegisterUserDTO();
     private string? errorMessage;
-
+    private string? successMessage;
 
     protected override async Task OnInitializedAsync()
     {
         // Initialize form state if needed
-
     }
 
     private async Task HandleRegistration()
     {
         errorMessage = "";
+        successMessage = "";
         try
         {
             await ApiService.RegisterNewUserAsync(model);
+            successMessage = "Registration successful! Welcome.";
+
+            // Reset the form if needed
             model = new RegisterUserDTO();
-           
+
+            // Optionally redirect to the login page after success
+            /*Navigation.NavigateTo("/login");*/
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             errorMessage = ex.Message;
-        }  
+        }
     }
 }
