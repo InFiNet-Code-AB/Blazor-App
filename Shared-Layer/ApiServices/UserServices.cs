@@ -29,7 +29,7 @@ namespace Shared_Layer.ApiServices
 
          public async Task<UserModel> GetUserByEmailAsync(string email)
         {
-            return await _httpClient.GetFromJsonAsync<UserModel>($"api/User/GetUserByEmail/{email}");
+            throw new NotImplementedException();
         }
 
         public Task<UserModel> GetUserByIdAsync(string userId)

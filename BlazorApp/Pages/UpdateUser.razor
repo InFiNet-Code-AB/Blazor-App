@@ -57,19 +57,19 @@
 
     private UpdatingUserDTO updatingUserModel = new UpdatingUserDTO();
     private string errorMessage = "";
-
+    private string successMessage = "";
 
     protected override async Task OnInitializedAsync()
     {
+        
     }
-
 
     private async Task HandleValidSubmit()
     {
         try
         {
             await UserService.UpdateUserAsync(updatingUserModel);
-            Navigation.NavigateTo("/profile-updated");
+            successMessage = "Profile updated successfully!";            
         }
         catch (Exception ex)
         {
