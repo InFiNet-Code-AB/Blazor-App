@@ -27,7 +27,7 @@ namespace Shared_Layer.ApiServices
             return await _httpClient.GetFromJsonAsync<List<UserModel>>("api/User/GetAllUsers");
         }
 
-         public async Task<UserModel> GetUserByEmailAsync(string email)
+        public async Task<UserModel> GetUserByEmailAsync(string email)
         {
             throw new NotImplementedException();
         }
@@ -80,6 +80,3 @@ namespace Shared_Layer.ApiServices
         }
     }
 }
-    
-
-
