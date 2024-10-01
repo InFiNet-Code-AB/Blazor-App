@@ -107,7 +107,7 @@ namespace Application_Layer.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize]
+        //[Authorize]
         [HttpPut("updateUser")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdatingUserDTO userDto)
         {

@@ -1,0 +1,105 @@
+﻿@page "/update-user"
+
+@using Domain_Layer.Models.User
+@using Shared_Layer.DTO_s.User
+@using Shared_Layer.ApiServices
+@inject NavigationManager Navigation
+@inject IUserServices UserService
+@inject HttpClient Http
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header text-center bg-light text-dark">
+                    <h2>Update User</h2>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="@updatingUserModel" OnValidSubmit="HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary class="text-danger" />
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <InputText id="email" class="form-control" @bind-Value="updatingUserModel.Email" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <InputText id="currentPassword" class="form-control" type="password" @bind-Value="updatingUserModel.CurrentPassword" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <InputText id="newPassword" class="form-control" type="password" @bind-Value="updatingUserModel.NewPassword" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <InputSelect id="role" @bind-Value="updatingUserModel.Role" class="form-control">
+                                <option value="">Select a role</option>
+                                <option value="Teacher">Teacher</option>
+                                <option value="Student">Student</option>
+                                <option value="Admin">Admin</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => updatingUserModel.Role)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <InputText id="firstName" class="form-control" @bind-Value="updatingUserModel.FirstName" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <InputText id="lastName" class="form-control" @bind-Value="updatingUserModel.LastName" />
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(errorMessage))
+                        {
+                            <div class="alert alert-danger mt-3" role="alert">
+                                @errorMessage
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(successMessage))
+                        {
+                            <div class="alert alert-success mt-3" role="alert">
+                                @successMessage
+                            </div>
+                        }
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      
+@code {
+
+    private UpdatingUserDTO updatingUserModel = new UpdatingUserDTO();
+    private string errorMessage = "";
+    private string successMessage = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            await UserService.UpdateUserAsync(updatingUserModel);
+            successMessage = "Profile updated successfully!";            
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+}
