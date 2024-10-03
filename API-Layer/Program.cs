@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Shared_Layer.ApiServices;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +77,15 @@ builder.Services.AddDefaultIdentity<UserModel>(options => options.SignIn.Require
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DojoDBContext>();
 
+// Register AuthenticationService
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]); 
+});
+
 builder.Services.AddScoped<DatabaseSeedHelper>();
 
 
@@ -113,3 +124,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Shared_Layer;
 using Shared_Layer.ApiServices;
+
 namespace BlazorApp
 {
     public class Program
@@ -16,6 +16,7 @@ namespace BlazorApp
 
             //Add services IUserService,... from Shared-Layer
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             await builder.Build().RunAsync();
         }
