@@ -61,7 +61,7 @@ namespace Application_Layer.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(string id)
         {
@@ -77,7 +77,7 @@ namespace Application_Layer.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("by-email/{email}")]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
@@ -95,7 +95,7 @@ namespace Application_Layer.Controllers
 
         [HttpGet]
         [Route("GetAllUsers")]
-        //   [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -107,7 +107,7 @@ namespace Application_Layer.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize]
+        //[Authorize]
         [HttpPut("updateUser")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdatingUserDTO userDto)
         {
@@ -130,7 +130,7 @@ namespace Application_Layer.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete("deleteUser/{userId}")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
@@ -146,7 +146,7 @@ namespace Application_Layer.Controllers
                 {
                     return BadRequest("User is not recognized.");
                 }
-
+                
                 var userQuery = new GetUserByEmailQuery(userLoggedInMail);
                 var currentUser = await _mediator.Send(userQuery);
                 if (currentUser == null || string.IsNullOrEmpty(currentUser.Id))

@@ -1,5 +1,6 @@
 ﻿using Domain_Layer.Models.User;
 using Shared_Layer.DTO_s.User;
+using System.Net.Http.Json;
 
 namespace Shared_Layer.ApiServices
 {
@@ -10,7 +11,7 @@ namespace Shared_Layer.ApiServices
         Task<UserModel> GetUserByEmailAsync(string email);
         Task<UserModel> GetUserByIdAsync(string userId);
         Task<UserModel> UpdateUserAsync(UserModel userToUpdate, string currentPassword, string newPassword);
-        Task<bool> DeleteUserByIdAsync(string userId);
+        Task<HttpResponseMessage> DeleteUserByIdAsync(string userId);
         Task<string> GenerateJwtTokenAsync(UserModel user);
     }
 }

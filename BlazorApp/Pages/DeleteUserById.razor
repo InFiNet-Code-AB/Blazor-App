@@ -1,20 +1,27 @@
 ﻿@page "/delete-user"
+
 @inject HttpClient Http
+@inject IUserServices ApiService
+
 @using System.Net.Http.Json
+@using Shared_Layer.ApiServices
+@using Shared_Layer.DTO_s.User
 
 
 
 <h3>DeleteUser</h3>
 
-<EditForm model="deleteUserModel OnValidSubmit="HandleDeleteUser">
-    <DataAnnotationsValidator />
+<EditForm Model="model" OnValidSubmit="SubmitDelete">
+    <DataAnnotationsValidator/>
+    <ValidationSummary />
 
     <div>
         <label for="userId">User ID:</label>
-        <InputText id="userId" @bind-Value="@deleteUserModel.UserId"></InputText>
+        <InputText id="userId" class="form-control" @bind-Value="model.UserId"></InputText>
+        <button type="submit">Delete User</button>
     </div>
 
-    <button type="submit">Delete User</button>
+    
 </EditForm>
 
 @if (!string.IsNullOrEmpty(message))
@@ -26,30 +33,35 @@
 
 
 @code {
-
-    private DeleteUserModel deleteUserModel = new DeleteUserModel();
+    private UserIdDTO model = new();
+    private string? errorMessage;
+    private string? successMessage;
+    private bool softDelete = false;
     private string message;
 
-    private async Task HandleDeleteUser()
+
+    private async Task SubmitDelete()
     {
+        softDelete = true;
+        errorMessage = null;
+
         try
         {
-            //calling the API to delete the user
-            var response = await Http.DeleteAsync($"api/deleteUser/{deleteUserModel.UserID}");
+            var response = await ApiService.DeleteUserByIdAsync(model.UserId);
 
             if (response.IsSuccessStatusCode)
             {
-                message = " User Successfully Deleted!";
+                successMessage = "Successfully soft delete user!";
+                model = new();
             }
             else
             {
-                message = "Failed to delete user. " + await response.Content.ReadAsync();
+                errorMessage = "soft delete not successfull!";
             }
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
-            message = $"Error: {ex.Message}";
+            errorMessage = ex.Message;
         }
     }
-
 }

@@ -12,12 +12,12 @@ namespace Shared_Layer.ApiServices
         {
             _httpClient = httpClient;
         }
-        public Task<bool> DeleteUserByIdAsync(string userId)
+        public async Task<HttpResponseMessage> DeleteUserByIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            return await _httpClient.DeleteAsync(requestUri:$"api/User/deleteUser/{userId}");
         }
 
-        public Task<string> GenerateJwtTokenAsync(UserModel user)
+        public async Task<string> GenerateJwtTokenAsync(UserModel user)
         {
             throw new NotImplementedException();
         }
@@ -26,7 +26,7 @@ namespace Shared_Layer.ApiServices
         {
             return await _httpClient.GetFromJsonAsync<List<UserModel>>("api/User/GetAllUsers");
         }
-
+        
         public Task<UserModel> GetUserByEmailAsync(string email)
         {
             throw new NotImplementedException();
