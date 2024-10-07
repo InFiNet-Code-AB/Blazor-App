@@ -1,0 +1,123 @@
+﻿@page "/search-user-by-id"
+@using Shared_Layer.ApiServices
+@using Domain_Layer.Models.User
+@using Shared_Layer.DTO_s.User
+@inject IUserServices ApiService;
+@using Microsoft.AspNetCore.Components.Web
+
+<PageTitle>Search User by ID</PageTitle>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Search User by ID</h2>
+
+    <div class="row mb-3">
+        <div class="col-md-6 offset-md-3">
+            <div class="input-group">
+                <input @bind="searchDto.Id" class="form-control" placeholder="Enter user ID..." />
+                <button class="btn btn-primary" @onclick="PerformSearch">Search</button>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                <div class="alert alert-danger mt-2">@errorMessage</div>
+            }
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+
+    @if (userResult != null)
+    {
+        <div class="modal fade show d-block" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User Details: @userResult.UserName</h5>
+                        <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>First Name:</strong> @userResult.FirstName</p>
+                                <p><strong>Last Name:</strong> @userResult.LastName</p>
+                                <p><strong>Email:</strong> @userResult.Email</p>
+                                <p><strong>Role:</strong> @userResult.Role</p>
+                                <p><strong>ID:</strong> @userResult.Id</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Phone Number:</strong> @userResult.PhoneNumber ?? "N/A"</p>
+                                <p><strong>Two-Factor Enabled:</strong> @userResult.TwoFactorEnabled.ToString()</p>
+                                <p><strong>Is Deleted:</strong> @userResult.IsDeleted</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade show"></div>
+    }
+</div>
+
+@code {
+
+    GetUserByIdDTO searchDto = new GetUserByIdDTO();
+    UserModel? userResult = null;
+    string? errorMessage = null;
+    bool isLoading = false;
+
+    async Task PerformSearch()
+    {
+        errorMessage = null;
+
+        if (string.IsNullOrEmpty(searchDto.Id))
+        {
+            errorMessage = "Please enter a valid user ID.";
+            return;
+        }
+
+        try
+        {
+            isLoading = true;
+
+            userResult = await ApiService.GetUserByIdAsync(searchDto.Id);
+
+            if (userResult == null)
+            {
+                errorMessage = $"No user found with ID: {searchDto.Id}";
+            }
+        }
+        catch (Exception)
+        {
+            errorMessage = "There is no user with this ID";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    void CloseModal()
+    {
+        userResult = null; 
+    }
+
+    string GetRoleBadgeClass(string role)
+    {
+        return role switch
+        {
+            "Admin" => "badge bg-success",
+            "Teacher" => "badge bg-info",
+            "Student" => "badge bg-secondary",
+            _ => "badge bg-warning"
+        };
+    }
+}

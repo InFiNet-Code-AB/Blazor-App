@@ -1,0 +1,121 @@
+﻿@page "/search-user-by-email"
+@using Shared_Layer.ApiServices
+@using Domain_Layer.Models.User
+@using Shared_Layer.DTO_s.User
+@inject IUserServices ApiService;
+
+<PageTitle>Search User by Email</PageTitle>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Search User by Email</h2>
+
+    <div class="row mb-3">
+        <div class="col-md-6 offset-md-3">
+            <div class="input-group">
+                <input @bind="searchDto.Email" class="form-control" placeholder="Enter email address..." />
+                <button class="btn btn-primary" @onclick="PerformSearch">Search</button>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                <div class="alert alert-danger mt-2">@errorMessage</div>
+            }
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+
+    @if (selectedUser != null)
+    {
+        <div class="modal fade show d-block" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User Details: @selectedUser.UserName</h5>
+                        <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>First Name:</strong> @selectedUser.FirstName</p>
+                                <p><strong>Last Name:</strong> @selectedUser.LastName</p>
+                                <p><strong>Email:</strong> @selectedUser.Email</p>
+                                <p><strong>Role:</strong> @selectedUser.Role</p>
+                                <p><strong>ID:</strong> @selectedUser.Id</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Phone Number:</strong> @selectedUser.PhoneNumber ?? "N/A"</p>
+                                <p><strong>Two-Factor Enabled:</strong> @selectedUser.TwoFactorEnabled.ToString()</p>
+                                <p><strong>Username:</strong> @selectedUser.UserName</p>
+                                <p><strong>Is Deleted:</strong> @selectedUser.IsDeleted</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade show"></div>
+    }
+</div>
+
+@code {
+    GetUserByEmailDTO searchDto = new GetUserByEmailDTO();
+    UserModel? selectedUser = null;
+    string? errorMessage = null;
+    bool isLoading = false;
+
+    async Task PerformSearch()
+    {
+        errorMessage = null;
+
+        if (string.IsNullOrEmpty(searchDto.Email))
+        {
+            errorMessage = "Please enter a valid email.";
+            return;
+        }
+
+        try
+        {
+            isLoading = true;
+            selectedUser = await ApiService.GetUserByEmailAsync(searchDto.Email);
+
+            if (selectedUser == null)
+            {
+                errorMessage = $"No user found with email: {searchDto.Email}";
+            }
+        }
+        catch (Exception)
+        {
+            errorMessage = "There is no user with this email!";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    void CloseModal()
+    {
+        selectedUser = null;
+    }
+
+    string GetRoleBadgeClass(string role)
+    {
+        return role switch
+        {
+            "Admin" => "badge bg-success",
+            "Teacher" => "badge bg-info",
+            "Student" => "badge bg-secondary",
+            _ => "badge bg-warning"
+        };
+    }
+}
