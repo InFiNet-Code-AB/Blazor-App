@@ -1,8 +1,12 @@
 ﻿@page "/login"
+@using Blazored.LocalStorage
 @using Domain_Layer.CommandOperationResult
 @using Domain_Layer.Models.User
+@using Microsoft.AspNetCore.Components.Authorization
 @using Shared_Layer.DTO_s.User
 @using Shared_Layer.ApiServices;
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
 @inject HttpClient Http
 @inject IUserServices ApiService;
 @inject NavigationManager Navigation;
@@ -26,35 +30,28 @@
             </div>
             <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
         </EditForm>
-        @if (!string.IsNullOrEmpty(errorMessage))
-        {
-            <div class="alert alert-danger mt-3">@errorMessage</div>
-        }
+       
     </div>
 </div>
 
 @code {
     private LoginUserDTO loginUser = new LoginUserDTO();
-    private string errorMessage;
-    private string successMessage;
 
-    protected override async Task OnInitializedAsync()
-    {
-
-    }
-
-    private async Task HandleLogin()
+    async Task HandleLogin()
     {
         try
         {
             await AuthenticationService.LoginAsync(loginUser);
-            Navigation.NavigateTo("/");
-            successMessage = "Login successfully!";
-        }
 
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+
+            ((CustomAuthStateProvider)AuthStateProvider).NotifyUserAuthentication(token);
+
+            Navigation.NavigateTo("/");
+        }
         catch (Exception ex)
         {
-            errorMessage = $"An error occurred: {ex.Message}";
+            Console.WriteLine($"Login failed: {ex.Message}");
         }
     }
 }
