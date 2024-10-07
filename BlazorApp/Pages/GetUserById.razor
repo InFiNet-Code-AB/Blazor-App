@@ -1,26 +1,36 @@
-﻿@page "/search-user-by-email"
+﻿@page "/search-user-by-id"
 @using Shared_Layer.ApiServices
 @using Domain_Layer.Models.User
 @using Shared_Layer.DTO_s.User
-@inject IUserServices ApiService;
+@inject IUserServices ApiService
 
-<PageTitle>Search User by Email</PageTitle>
+<PageTitle>Search User by ID</PageTitle>
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Search User by Email</h2>
+    <h2 class="text-center mb-4">Search User by ID</h2>
 
-    <div class="row mb-3">
-        <div class="col-md-6 offset-md-3">
-            <div class="input-group">
-                <input @bind="searchDto.Email" class="form-control" placeholder="Enter email address..." />
-                <button class="btn btn-primary" @onclick="PerformSearch">Search</button>
+
+    <EditForm Model="@userIdDto" OnValidSubmit="PerformSearch">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="row mb-3">
+            <div class="col-md-6 offset-md-3">
+                <div class="input-group">
+
+                    <InputText @bind-Value="userIdDto.Id" class="form-control" placeholder="Enter user ID..." />
+                    <button type="submit" class="btn btn-primary" disabled="@isLoading">Search</button>
+                </div>
+
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <div class="alert alert-danger mt-2">@errorMessage</div>
+                }
             </div>
-            @if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                <div class="alert alert-danger mt-2">@errorMessage</div>
-            }
         </div>
-    </div>
+    </EditForm>
+
 
     @if (isLoading)
     {
@@ -30,6 +40,7 @@
             </div>
         </div>
     }
+
 
     @if (selectedUser != null)
     {
@@ -68,34 +79,29 @@
 </div>
 
 @code {
-    GetUserByEmailDTO searchDto = new GetUserByEmailDTO();
+    UserIdDTO userIdDto = new UserIdDTO();
     UserModel? selectedUser = null;
     string? errorMessage = null;
     bool isLoading = false;
+
 
     async Task PerformSearch()
     {
         errorMessage = null;
 
-        if (string.IsNullOrEmpty(searchDto.Email))
-        {
-            errorMessage = "Please enter a valid email.";
-            return;
-        }
-
         try
         {
             isLoading = true;
-            selectedUser = await ApiService.GetUserByEmailAsync(searchDto.Email);
+            selectedUser = await ApiService.GetUserByIdAsync(userIdDto.Id);
 
             if (selectedUser == null)
             {
-                errorMessage = $"No user found with email: {searchDto.Email}";
+                errorMessage = $"No user found with ID: {userIdDto.Id}";
             }
         }
         catch (Exception)
         {
-            errorMessage = "There is no user with this email!";
+            errorMessage = "There is no user with this ID!";
         }
         finally
         {
@@ -103,19 +109,9 @@
         }
     }
 
+
     void CloseModal()
     {
         selectedUser = null;
-    }
-
-    string GetRoleBadgeClass(string role)
-    {
-        return role switch
-        {
-            "Admin" => "badge bg-success",
-            "Teacher" => "badge bg-info",
-            "Student" => "badge bg-secondary",
-            _ => "badge bg-warning"
-        };
     }
 }

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Shared_Layer.DTO_s.User
 {
-    public class GetUserByEmailDTO
+    public class UserIdDTO
     {
-        public string Email { get; set; } = string.Empty;
+        [Required]
+        [StringLength(36, MinimumLength = 36)]
+        public string Id { get; set; } = string.Empty;
     }
 }
