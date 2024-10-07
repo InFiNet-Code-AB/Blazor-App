@@ -9,8 +9,6 @@ namespace Shared_Layer.DTO_s.User
 {
     public class GetUserByEmailDTO
     {
-       
         public string Email { get; set; } = string.Empty;
-        
     }
 }
