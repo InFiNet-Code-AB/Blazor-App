@@ -61,7 +61,7 @@ namespace Application_Layer.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(string id)
         {
@@ -77,7 +77,7 @@ namespace Application_Layer.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("by-email/{email}")]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
@@ -130,7 +130,7 @@ namespace Application_Layer.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete("deleteUser/{userId}")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
