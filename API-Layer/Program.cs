@@ -6,6 +6,7 @@ using Infrastructure_Layer;
 using Infrastructure_Layer.Database;
 using Infrastructure_Layer.DatabaseHelper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -80,11 +81,12 @@ builder.Services.AddDefaultIdentity<UserModel>(options => options.SignIn.Require
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DojoDBContext>();
 
-// Register AuthenticationService
+//........ Register AuthenticationService
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 //builder.Services.AddCascadingAuthenticationState();
+//builder.Services.AddSingleton<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>(client =>
