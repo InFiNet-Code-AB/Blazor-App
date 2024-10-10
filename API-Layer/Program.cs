@@ -1,15 +1,20 @@
 ﻿using System.Text;
 using Application_Layer;
+using Blazored.LocalStorage;
 using Domain_Layer.Models.User;
 using Infrastructure_Layer;
 using Infrastructure_Layer.Database;
 using Infrastructure_Layer.DatabaseHelper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Shared_Layer.ApiServices;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +30,8 @@ builder.Services.AddCors(options =>
             builder.WithOrigins("https://localhost:7158")//blazor https address
                   .AllowAnyMethod()
                   .AllowAnyHeader()
-                  .WithHeaders(HeaderNames.ContentType);
+                  .WithHeaders(HeaderNames.ContentType)
+                  .AllowCredentials(); // detta för att tillåta autentisering
         });
 });
 
@@ -75,6 +81,23 @@ builder.Services.AddDefaultIdentity<UserModel>(options => options.SignIn.Require
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DojoDBContext>();
 
+//........ Register AuthenticationService
+
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+//builder.Services.AddCascadingAuthenticationState();
+//builder.Services.AddSingleton<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]);
+});
+
+builder.Services.AddScoped<CustomAuthStateProvider>();
+
+//.............................
+
 builder.Services.AddScoped<DatabaseSeedHelper>();
 
 
@@ -113,3 +136,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
