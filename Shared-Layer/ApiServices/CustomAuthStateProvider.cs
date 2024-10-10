@@ -58,7 +58,6 @@ namespace Shared_Layer.ApiServices
 
         public void NotifyUserLogout(ClaimsPrincipal user)
         {
-            
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
     }
