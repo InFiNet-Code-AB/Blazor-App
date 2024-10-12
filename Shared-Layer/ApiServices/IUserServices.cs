@@ -10,7 +10,7 @@ namespace Shared_Layer.ApiServices
         Task<UserModel> GetUserByEmailAsync(string email);
         Task<UserModel> GetUserByIdAsync(string userId);
         Task UpdateUserAsync(UpdatingUserDTO updatedUser);
-        Task<bool> DeleteUserByIdAsync(string userId);
+        Task<HttpResponseMessage> DeleteUserByIdAsync(string userId);
         Task<string> GenerateJwtTokenAsync(UserModel user);
     }
 }
