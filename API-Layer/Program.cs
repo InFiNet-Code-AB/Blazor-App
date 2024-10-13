@@ -81,23 +81,6 @@ builder.Services.AddDefaultIdentity<UserModel>(options => options.SignIn.Require
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DojoDBContext>();
 
-//........ Register AuthenticationService
-
-builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
-//builder.Services.AddCascadingAuthenticationState();
-//builder.Services.AddSingleton<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
-
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>(client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]);
-});
-
-builder.Services.AddScoped<CustomAuthStateProvider>();
-
-//.............................
-
 builder.Services.AddScoped<DatabaseSeedHelper>();
 
 

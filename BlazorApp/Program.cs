@@ -24,6 +24,7 @@ namespace BlazorApp
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            builder.Services.AddScoped<CustomAuthStateProvider>();
             //builder.Services.AddSingleton<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
 
             await builder.Build().RunAsync();
