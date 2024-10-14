@@ -38,8 +38,6 @@
         {
             await AuthenticationService.LogoutAsync();
 
-            ((CustomAuthStateProvider)AuthStateProvider).NotifyUserLogout(new ClaimsPrincipal(new ClaimsIdentity()));
-
             Navigation.NavigateTo("/login");
         }
         catch (Exception ex)
