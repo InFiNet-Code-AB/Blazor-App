@@ -37,8 +37,8 @@ namespace Shared_Layer.ApiServices
 
         public async Task LogoutAsync()
         {
-             await _localStorage.RemoveItemAsync("authToken");
-             _httpClient.DefaultRequestHeaders.Authorization = null;
+            await _localStorage.RemoveItemAsync("authToken");
+            _httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
     }
