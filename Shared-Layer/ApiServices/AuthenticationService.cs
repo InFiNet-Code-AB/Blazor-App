@@ -9,11 +9,13 @@ namespace Shared_Layer.ApiServices
 {
     public class AuthenticationService : IAuthenticationService
     {
+        private readonly CustomAuthStateProvider _authStateProvider;
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
 
-        public AuthenticationService(HttpClient httpClient, ILocalStorageService localStorage)
+        public AuthenticationService(CustomAuthStateProvider authStateProvider, HttpClient httpClient, ILocalStorageService localStorage)
         {
+            _authStateProvider = authStateProvider;
             _httpClient = httpClient;
             _localStorage = localStorage;
         }
@@ -39,6 +41,7 @@ namespace Shared_Layer.ApiServices
         {
             await _localStorage.RemoveItemAsync("authToken");
             _httpClient.DefaultRequestHeaders.Authorization = null;
+            _authStateProvider.MarkUserAsLoggedOut();
         }
 
     }
