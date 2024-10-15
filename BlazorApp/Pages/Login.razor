@@ -45,8 +45,6 @@
 
             var token = await LocalStorage.GetItemAsync<string>("authToken");
 
-            ((CustomAuthStateProvider)AuthStateProvider).NotifyUserAuthentication(token);
-
             Navigation.NavigateTo("/");
         }
         catch (Exception ex)
