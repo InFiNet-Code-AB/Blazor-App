@@ -4,7 +4,7 @@ namespace Shared_Layer.ApiServices
 {
     public interface IAuthenticationService
     {
-        Task LoginAsync(LoginUserDTO loginUser);
+        Task<bool> LoginAsync(LoginUserDTO loginUser);
         Task LogoutAsync();
     }
 }

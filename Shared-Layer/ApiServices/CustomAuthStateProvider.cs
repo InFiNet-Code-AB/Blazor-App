@@ -38,7 +38,7 @@ namespace Shared_Layer.ApiServices
             return new AuthenticationState(user);
         }
 
-        public void NotifyUserAuthentication(string token)
+        public void MarkUserAsAuthenticated(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadJwtToken(token);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
@@ -20,20 +21,28 @@ namespace Shared_Layer.ApiServices
             _localStorage = localStorage;
         }
 
-        public async Task LoginAsync(LoginUserDTO loginUser)
+        public async Task<bool> LoginAsync(LoginUserDTO loginUser)
         {
-            using (HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/User/login", loginUser))
+            var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginUser);
+            if (response.IsSuccessStatusCode)
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    throw new Exception(errorMessage);
-                }
-
                 var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
 
                 // Save the token in local storage
                 await _localStorage.SetItemAsync("authToken", loginResponse.Token);
+
+                // Mark the user as authenticated
+                _authStateProvider.MarkUserAsAuthenticated(loginResponse.Token);
+
+                // Set the Authorization header for future requests
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", loginResponse.Token);
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
