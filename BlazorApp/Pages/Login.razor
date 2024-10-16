@@ -31,24 +31,38 @@
             <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
         </EditForm>
        
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger mt-2">@errorMessage</div>
+        }
+       
     </div>
 </div>
 
 @code {
     private LoginUserDTO loginUser = new LoginUserDTO();
+    private string errorMessage;  
 
     async Task HandleLogin()
     {
+        errorMessage = string.Empty;  
         try
         {
-            await AuthenticationService.LoginAsync(loginUser);
+            bool loginSuccessful = await AuthenticationService.LoginAsync(loginUser);
 
-
-            Navigation.NavigateTo("/");
+            if (loginSuccessful)
+            {
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "Felaktig e-postadress eller lösenord. Försök igen.";
+            }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Login failed: {ex.Message}");
+            errorMessage = $"Inloggning misslyckades: {ex.Message}";
         }
     }
 }
+
