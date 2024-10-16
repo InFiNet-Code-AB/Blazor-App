@@ -26,15 +26,15 @@ namespace Shared_Layer.ApiServices
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
+           
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadJwtToken(token);
 
-            var claims = jwtToken.Claims.Select(claim => new Claim(claim.Type, claim.Value));
-            var identity = new ClaimsIdentity(claims, "apiauth_type");
+            var claims = jwtToken.Claims.ToList();
+            var identity = new ClaimsIdentity(claims, "jwtAuthType");
             var user = new ClaimsPrincipal(identity);
 
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return new AuthenticationState(user);
         }
 
@@ -43,8 +43,8 @@ namespace Shared_Layer.ApiServices
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadJwtToken(token);
 
-            var claims = jwtToken.Claims.Select(claim => new Claim(claim.Type, claim.Value));
-            var identity = new ClaimsIdentity(claims, "apiauth_type");
+            var claims = jwtToken.Claims.ToList();
+            var identity = new ClaimsIdentity(claims, "jwtAuthType");
             var user = new ClaimsPrincipal(identity);
 
 

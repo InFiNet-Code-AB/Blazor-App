@@ -23,7 +23,7 @@ namespace Shared_Layer.ApiServices
 
         public async Task<bool> LoginAsync(LoginUserDTO loginUser)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginUser);
+            var response = await _httpClient.PostAsJsonAsync("api/User/login", loginUser);
             if (response.IsSuccessStatusCode)
             {
                 var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
