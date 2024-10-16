@@ -26,7 +26,6 @@ namespace Shared_Layer.ApiServices
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
 
-           
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadJwtToken(token);
 
