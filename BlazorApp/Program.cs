@@ -27,7 +27,7 @@ namespace BlazorApp
             builder.Services.AddScoped<CustomAuthStateProvider>();
             builder.Services.AddScoped<AuthenticationStateProvider>(provider =>
                 provider.GetRequiredService<CustomAuthStateProvider>());
-           
+
             await builder.Build().RunAsync();
         }
     }
