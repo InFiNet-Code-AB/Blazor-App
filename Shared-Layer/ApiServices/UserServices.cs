@@ -12,9 +12,9 @@ namespace Shared_Layer.ApiServices
         {
             _httpClient = httpClient;
         }
-        public Task<bool> DeleteUserByIdAsync(string userId)
+        public async Task<HttpResponseMessage> DeleteUserByIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            return await _httpClient.DeleteAsync(requestUri: $"api/User/deleteUser/{userId}");
         }
 
         public Task<string> GenerateJwtTokenAsync(UserModel user)

@@ -1,0 +1,76 @@
+﻿@page "/delete-user"
+
+@inject HttpClient Http
+@inject IUserServices ApiService
+
+@using System.Net.Http.Json
+@using Shared_Layer.ApiServices
+@using Shared_Layer.DTO_s.User
+@using Domain_Layer.Models.User
+
+
+
+<h2 class="text-center mb-4">Delete Your Account</h2>
+
+
+<EditForm Model="model" OnValidSubmit="SubmitDelete">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+
+        <InputText id="userId" class="form-control" @bind-Value="model.Id" placeholder="Enter User ID..."></InputText>
+        <button class="btn btn-danger" type="button" @onclick="SubmitDelete">Delete User</button>
+    </div>
+</EditForm>
+
+
+
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="text-center">
+        <div class="alert alert-success text-center mt-3">@successMessage</div>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger text-center mt-3">@errorMessage</div>
+}
+
+
+
+@code {
+
+    private UserIdDTO model = new();
+    private string? errorMessage;
+    private string? successMessage;
+
+    private async Task SubmitDelete()
+    {
+        var response = await ApiService.DeleteUserByIdAsync($"api/user/deleteUser/{model.Id}");
+
+        try
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                successMessage = "You Successfully deleted account";
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                errorMessage = $"Failed to delete user. Server response: {response.StatusCode}, {errorContent}";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occured while trying to delete the user: {ex.Message}";
+        }
+    }
+
+    private void ClearIdField()
+    {
+        model = new();
+    }
+}
