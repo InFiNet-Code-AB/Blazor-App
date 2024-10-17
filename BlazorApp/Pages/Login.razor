@@ -41,11 +41,11 @@
 
 @code {
     private LoginUserDTO loginUser = new LoginUserDTO();
-    private string errorMessage;  
+    private string errorMessage;
 
     async Task HandleLogin()
     {
-        errorMessage = string.Empty;  
+        errorMessage = string.Empty;
         try
         {
             bool loginSuccessful = await AuthenticationService.LoginAsync(loginUser);
@@ -65,4 +65,3 @@
         }
     }
 }
-
