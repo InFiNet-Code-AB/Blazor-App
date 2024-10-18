@@ -1,4 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -6,7 +11,14 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            @if (isAuthenticated)
+            {
+                <a href="/logout">Logout</a>
+            }
+            else
+            {
+                <a href="/login">Login</a>
+            }
         </div>
 
         <article class="content px-4">
@@ -14,3 +26,31 @@
         </article>
     </main>
 </div>
+
+@code {
+    private bool isAuthenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        isAuthenticated = authState.User.Identity.IsAuthenticated;
+
+        // Listen for changes
+        AuthStateProvider.AuthenticationStateChanged += OnAuthenticationStateChanged;
+    }
+
+    private void OnAuthenticationStateChanged(Task<AuthenticationState> task)
+    {
+        InvokeAsync(async () =>
+        {
+            var authState = await task;
+            isAuthenticated = authState.User.Identity.IsAuthenticated;
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        AuthStateProvider.AuthenticationStateChanged -= OnAuthenticationStateChanged;
+    }
+}

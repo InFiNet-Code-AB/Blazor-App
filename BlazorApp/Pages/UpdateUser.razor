@@ -3,9 +3,11 @@
 @using Domain_Layer.Models.User
 @using Shared_Layer.DTO_s.User
 @using Shared_Layer.ApiServices
+@using Blazored.LocalStorage
 @inject NavigationManager Navigation
 @inject IUserServices UserService
 @inject HttpClient Http
+@inject ILocalStorageService localStorage
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -19,40 +21,39 @@
                         <DataAnnotationsValidator />
                         <ValidationSummary class="text-danger" />
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <InputText id="email" class="form-control" @bind-Value="updatingUserModel.Email" />
+                        <div class="form-floating mb-3">
+                            <InputText id="email" class="form-control" @bind-Value="updatingUserModel.Email" placeholder="Email" />
+                            <label for="email">Email</label>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="currentPassword" class="form-label">Current Password</label>
-                            <InputText id="currentPassword" class="form-control" type="password" @bind-Value="updatingUserModel.CurrentPassword" />
+                        <div class="form-floating mb-3">
+                            <InputText id="currentPassword" class="form-control" type="password" @bind-Value="updatingUserModel.CurrentPassword" placeholder="Current Password" />
+                            <label for="currentPassword">Current Password</label>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="newPassword" class="form-label">New Password</label>
-                            <InputText id="newPassword" class="form-control" type="password" @bind-Value="updatingUserModel.NewPassword" />
+                        <div class="form-floating mb-3">
+                            <InputText id="newPassword" class="form-control" type="password" @bind-Value="updatingUserModel.NewPassword" placeholder="New Password" />
+                            <label for="newPassword">New Password</label>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="role" class="form-label">Role</label>
+                        <div class="form-floating mb-3">
                             <InputSelect id="role" @bind-Value="updatingUserModel.Role" class="form-control">
                                 <option value="">Select a role</option>
                                 <option value="Teacher">Teacher</option>
                                 <option value="Student">Student</option>
                                 <option value="Admin">Admin</option>
                             </InputSelect>
-                            <ValidationMessage For="@(() => updatingUserModel.Role)" />
+                            <label for="role">Role</label>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <InputText id="firstName" class="form-control" @bind-Value="updatingUserModel.FirstName" />
+                        <div class="form-floating mb-3">
+                            <InputText id="firstName" class="form-control" @bind-Value="updatingUserModel.FirstName" placeholder="First Name" />
+                            <label for="firstName">First Name</label>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <InputText id="lastName" class="form-control" @bind-Value="updatingUserModel.LastName" />
+                        <div class="form-floating mb-3">
+                            <InputText id="lastName" class="form-control" @bind-Value="updatingUserModel.LastName" placeholder="Last Name" />
+                            <label for="lastName">Last Name</label>
                         </div>
 
                         <div class="d-grid gap-2">
@@ -78,6 +79,7 @@
         </div>
     </div>
 </div>
+
       
 @code {
 
@@ -87,7 +89,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
+        var selectedUser = await localStorage.GetItemAsync<UserModel>("selectedUser");
+        if (selectedUser != null)
+        {
+            updatingUserModel.FirstName = selectedUser.FirstName;
+            updatingUserModel.LastName = selectedUser.LastName;
+            updatingUserModel.Email = selectedUser.Email;
+            updatingUserModel.Role = selectedUser.Role;
+        }
     }
 
     private async Task HandleValidSubmit()
