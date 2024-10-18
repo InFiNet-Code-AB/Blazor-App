@@ -1,15 +1,20 @@
 ﻿using System.Text;
 using Application_Layer;
+using Blazored.LocalStorage;
 using Domain_Layer.Models.User;
 using Infrastructure_Layer;
 using Infrastructure_Layer.Database;
 using Infrastructure_Layer.DatabaseHelper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Shared_Layer.ApiServices;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +30,8 @@ builder.Services.AddCors(options =>
             builder.WithOrigins("https://localhost:7158")//blazor https address
                   .AllowAnyMethod()
                   .AllowAnyHeader()
-                  .WithHeaders(HeaderNames.ContentType);
+                  .WithHeaders(HeaderNames.ContentType)
+                  .AllowCredentials(); // detta för att tillåta autentisering
         });
 });
 
@@ -93,6 +99,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
         };
     });
+// Add authorization policy
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireClaim("roles", "admin"));
+});
 
 var app = builder.Build();
 
@@ -113,3 +125,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+

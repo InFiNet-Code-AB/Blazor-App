@@ -1,6 +1,7 @@
 ﻿@page "/users"
 @using Shared_Layer.ApiServices
 @using Domain_Layer.Models.User
+@attribute [Authorize(Roles = "Admin")]
 @inject IUserServices ApiService;
 <PageTitle>All Users</PageTitle>
 

@@ -1,0 +1,53 @@
+﻿@page "/logout"
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+@using Shared_Layer.ApiServices
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
+@inject IAuthenticationService AuthenticationService
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div>
+        @if (isLoggingOut)
+        {
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Logging out...</span>
+                </div>
+                <p>Logging out, please wait...</p>
+            </div>
+        }
+        else if (errorMessage != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @errorMessage
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private bool isLoggingOut = true;   
+    private string errorMessage;        
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await AuthenticationService.LogoutAsync();
+
+            Navigation.NavigateTo("/login");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "An error occurred during logout. Please try again.";
+            Console.WriteLine($"Logout failed: {ex.Message}");
+        }
+        finally
+        {
+            isLoggingOut = false; 
+        }
+    }
+}

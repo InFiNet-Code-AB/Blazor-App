@@ -21,9 +21,25 @@
             </NavLink>
         </div>
 
+        <AuthorizeView Roles="Admin" >
+            <Authorized> 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="users">
                 <span class="bi bi-people-nested-nav-menu" aria-hidden="true"></span> Users
+            </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="login">
+                <span class="bi bi-box-arrow-in-right fs-4" aria-hidden="true"></span> Login
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="logout">
+                <span class="bi bi-box-arrow-right fs-4" aria-hidden="true"></span> Logout
             </NavLink>
         </div>
 
@@ -38,18 +54,25 @@
                 <span class="bi bi-person-plus fs-4" aria-hidden="true"></span> Sign Up
             </NavLink>
         </div>
-
+         <AuthorizeView Roles="Admin" >
+            <Authorized> 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="search-user-by-email">
                 <span class="bi bi-people-nested-nav-menu" aria-hidden="true"></span> Search User By Email
             </NavLink>
         </div>
+        </Authorized>
+        </AuthorizeView>
 
+         <AuthorizeView Roles="Admin" >
+            <Authorized> 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="search-user-by-id">
                 <span class="bi bi-people-nested-nav-menu" aria-hidden="true"></span> Search User By Id
             </NavLink>
         </div>
+        </Authorized>
+        </AuthorizeView>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="delete-user">
