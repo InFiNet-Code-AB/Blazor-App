@@ -1,0 +1,71 @@
+﻿@page "/my-profile"
+@using Blazored.LocalStorage
+@using Domain_Layer.Models.User
+@using System.Net.Http.Headers
+@using System.Security.Claims
+@inject HttpClient Http
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
+
+<h3>My Profile</h3>
+
+@if (user != null)
+{
+    <div>
+        <p><strong>First Name:</strong> @user.FirstName</p>
+        <p><strong>Last Name:</strong> @user.LastName</p>
+        <p><strong>Email:</strong> @user.Email</p>
+        <p><strong>Role:</strong> @user.Role</p>
+    </div>
+    <button class="btn btn-primary" @onclick="UpdateProfile">Update</button>
+    <button class="btn btn-danger" @onclick="DeleteProfile">Delete</button>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="text-danger">@errorMessage</p>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private UserModel user;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var email = GetEmailFromToken(token);
+                user = await Http.GetFromJsonAsync<UserModel>($"api/User/by-email/{email}");
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to load profile: {ex.Message}";
+        }
+    }
+
+    private string GetEmailFromToken(string token)
+    {
+        var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+        return emailClaim?.Value;
+    }
+
+    private void UpdateProfile()
+    {
+        Navigation.NavigateTo("/update-user");
+    }
+
+    private async Task DeleteProfile()
+    {
+        
+    }
+}

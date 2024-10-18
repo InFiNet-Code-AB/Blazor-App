@@ -1,8 +1,13 @@
 ﻿@page "/users"
 @using Shared_Layer.ApiServices
 @using Domain_Layer.Models.User
+@using Blazored.LocalStorage
 @attribute [Authorize(Roles = "Admin")]
 @inject IUserServices ApiService;
+@inject NavigationManager Navigation;
+@inject ILocalStorageService LocalStorage;
+
+
 <PageTitle>All Users</PageTitle>
 
 <div class="container mt-4">
@@ -92,6 +97,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
+                        <button type="button" class="btn btn-primary" @onclick="UpdateUser">Update</button>
+                        <button type="button" class="btn btn-danger" @onclick="DeleteUser">Delete</button>
                     </div>
                 </div>
             </div>
@@ -154,4 +161,21 @@
            
         };
     }
+    async void UpdateUser()
+    {
+        if (selectedUser != null)
+        {
+            await LocalStorage.SetItemAsync("selectedUser", selectedUser);
+            Navigation.NavigateTo("/update-user");
+        }
+    }
+
+    void DeleteUser()
+    {
+        if (selectedUser != null)
+        {
+            Navigation.NavigateTo($"/delete-user?userId={selectedUser.Id}");
+        }
+    }
+
 }
