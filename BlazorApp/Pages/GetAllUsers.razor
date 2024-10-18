@@ -98,8 +98,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
                         <button type="button" class="btn btn-primary" @onclick="UpdateUser">Update</button>
-                        <button type="button" class="btn btn-danger" @onclick="DeleteUser">Delete</button>
-                    </div>
+                       </div>
                 </div>
             </div>
         </div>
@@ -169,13 +168,4 @@
             Navigation.NavigateTo("/update-user");
         }
     }
-
-    void DeleteUser()
-    {
-        if (selectedUser != null)
-        {
-            Navigation.NavigateTo($"/delete-user?userId={selectedUser.Id}");
-        }
-    }
-
 }
