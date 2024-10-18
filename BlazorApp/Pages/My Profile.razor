@@ -3,6 +3,7 @@
 @using Domain_Layer.Models.User
 @using System.Net.Http.Headers
 @using System.Security.Claims
+@using Shared_Layer.DTO_s.User
 @inject HttpClient Http
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
@@ -31,6 +32,7 @@ else
 
 @code {
     private UserModel user;
+    private UpdatingUserDTO updatingUserModel = new UpdatingUserDTO();
     private string errorMessage;
 
     protected override async Task OnInitializedAsync()
@@ -59,10 +61,30 @@ else
         return emailClaim?.Value;
     }
 
-    private void UpdateProfile()
+    private async void UpdateProfile()
     {
-        Navigation.NavigateTo("/update-user");
+        try
+        {
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var email = GetEmailFromToken(token);
+                var loggedInUser = await Http.GetFromJsonAsync<UserModel>($"api/User/by-email/{email}");
+
+                if (loggedInUser != null)
+                {
+                    await LocalStorage.SetItemAsync("selectedUser", loggedInUser); // Save the logged-in user’s details
+                    Navigation.NavigateTo("/update-user"); 
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to update profile: {ex.Message}";
+        }
     }
+
 
     private async Task DeleteProfile()
     {
