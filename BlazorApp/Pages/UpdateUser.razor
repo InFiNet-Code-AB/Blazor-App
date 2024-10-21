@@ -22,18 +22,18 @@
                         <ValidationSummary class="text-danger" />
 
                         <div class="form-floating mb-3">
+                            <InputText id="firstName" class="form-control" @bind-Value="updatingUserModel.FirstName" placeholder="First Name" />
+                            <label for="firstName">First Name</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <InputText id="lastName" class="form-control" @bind-Value="updatingUserModel.LastName" placeholder="Last Name" />
+                            <label for="lastName">Last Name</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
                             <InputText id="email" class="form-control" @bind-Value="updatingUserModel.Email" placeholder="Email" />
                             <label for="email">Email</label>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <InputText id="currentPassword" class="form-control" type="password" @bind-Value="updatingUserModel.CurrentPassword" placeholder="Current Password" />
-                            <label for="currentPassword">Current Password</label>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <InputText id="newPassword" class="form-control" type="password" @bind-Value="updatingUserModel.NewPassword" placeholder="New Password" />
-                            <label for="newPassword">New Password</label>
                         </div>
 
                         <div class="form-floating mb-3">
@@ -47,14 +47,14 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <InputText id="firstName" class="form-control" @bind-Value="updatingUserModel.FirstName" placeholder="First Name" />
-                            <label for="firstName">First Name</label>
+                            <InputText id="currentPassword" class="form-control" type="password" @bind-Value="updatingUserModel.CurrentPassword" placeholder="Current Password" />
+                            <label for="currentPassword" style="font-size: 0.9rem; color: rgba(0, 0, 0, 0.6);">Current Password</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <InputText id="lastName" class="form-control" @bind-Value="updatingUserModel.LastName" placeholder="Last Name" />
-                            <label for="lastName">Last Name</label>
-                        </div>
+                            <InputText id="newPassword" class="form-control" type="password" @bind-Value="updatingUserModel.NewPassword" placeholder="New Password" />
+                            <label for="newPassword" style="font-size: 0.9rem; color: rgba(0, 0, 0, 0.6);">New Password</label>
+                        </div>                                            
 
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn-block">Update Profile</button>

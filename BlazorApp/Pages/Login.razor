@@ -5,49 +5,74 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Shared_Layer.DTO_s.User
 @using Shared_Layer.ApiServices;
+
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
 @inject HttpClient Http
-@inject IUserServices ApiService;
-@inject NavigationManager Navigation;
+@inject IUserServices ApiService
+@inject NavigationManager Navigation
 @inject IAuthenticationService AuthenticationService
 
-<div class="login-page d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow login-card">
-        <h2 class="text-center mb-4 text-primary">Welcome </h2>
-        <p class="text-center text-muted">Log in to access your account</p>
-        <EditForm Model="loginUser" OnValidSubmit="HandleLogin">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+<div class="login-page d-flex vh-100">
+    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center"
+         style="background: url('bild-5.jpg') center center;">
+        <h1 class="text-light bg-black bg-opacity-10">BLAZOR</h1>
+        <p class="text-light bg-black bg-opacity-10">Welcome to our school.</p>
+    </div>
 
-            <div class="form-floating mb-3">
-                <InputText id="email" class="form-control" @bind-Value="loginUser.Email" placeholder="Email" />
-                <label for="email">Email</label>
-                <ValidationMessage For="@(() => loginUser.Email)" />
+    <div class="login-card col-md-6 d-flex justify-content-center align-items-center rounded bg-dark bg-opacity-10 ">
+        <div class="p-4 w-75">
+            <div class="text-center mb-4">
+                <div class="d-flex justify-content-center">
+                    <img src="~/Logo.jpg" alt="Logo" class="img-fluid" />
+                </div>
             </div>
 
-            <div class="form-floating mb-3">
-                <InputText id="password" type="password" class="form-control" @bind-Value="loginUser.Password" placeholder="Password" />
-                <label for="password">Password</label>
-                <ValidationMessage For="@(() => loginUser.Password)" />
+            <p class="text-center font-monospace">Log in to access your account</p>
+
+            <EditForm Model="loginUser" OnValidSubmit="HandleLogin">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="mb-3 mt-5">
+                    <label for="email" class="form-label" style=" font-family: 'Arial', sans-serif; font-size: 14px;">Email</label>
+                    <InputText id="email" class="form-control border-0 border-bottom border-dark bg-transparent"
+                               @bind-Value="loginUser.Email"
+                               placeholder="Enter Email" style="font-size: 12px;" />
+                    <ValidationMessage For="@(() => loginUser.Email)" />
+                </div>
+
+
+
+                <div class="mb-3 mt-4">
+                    <label for="password" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Password</label>
+                    <InputText id="password" type="password" class="form-control border-0 border-bottom border-dark bg-transparent"
+                               @bind-Value="loginUser.Password"
+                               placeholder="Enter Password" style="font-size: 12px;" />
+                    <ValidationMessage For="@(() => loginUser.Password)" />
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 btn-lg fs-6 btn-outline-secondary text-black">
+                    Login
+                </button>
+
+            </EditForm>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger mt-3 text-center w-100">@errorMessage</div>
+            }
+
+            <div class="text-center mt-3">
+                <a href="/forgot-password" class="text-decoration-none text-dark" style="font-size: 12px;">Forgot Password?</a>
             </div>
-
-            <button type="submit" class="btn btn-primary w-100 btn-lg">Login</button>
-        </EditForm>
-
-        @if (!string.IsNullOrEmpty(errorMessage))
-        {
-            <div class="alert alert-danger mt-3 text-center">@errorMessage</div>
-        }
-
-        <div class="text-center mt-3">
-            <a href="/forgot-password" class="text-decoration-none text-muted">Forgot Password?</a>
-        </div>
-        <div class="text-center mt-2">
-            <a href="/register" class="text-decoration-none text-primary">Create an Account</a>
+            <div class="text-center mt-2">
+                <a href="/register" class="text-decoration-none text-primary" style="font-size: 12px;">Create an Account</a>
+            </div>
         </div>
     </div>
-</div>
+</div>    
+
 
 @code {
     private LoginUserDTO loginUser = new LoginUserDTO();
