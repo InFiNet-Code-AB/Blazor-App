@@ -12,5 +12,7 @@ namespace Shared_Layer.DTO_s.User
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; } = string.Empty;
+
+        //change bransh
     }
 }
