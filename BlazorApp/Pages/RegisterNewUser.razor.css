@@ -1,0 +1,15 @@
+﻿.register-page {
+    min-height: 100vh; /* Ensures it covers the entire viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa; /* Light background for the form area */
+}
+
+.register-image {
+    background-image: url('img/spaceman.jpg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Ensures it covers the full height of the page */
+}
