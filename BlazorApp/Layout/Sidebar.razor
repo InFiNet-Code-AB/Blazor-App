@@ -1,0 +1,76 @@
+﻿<AuthorizeView Roles="Admin, Teacher, Student">
+    <Authorized>
+        <div class="container @(isExpanded ? "expand" : "collapse")" @onmouseenter="ExpandSidebar" @onmouseleave="CollapseSidebarAndSubmenu">
+            <NavLink class="menu-item main-menu" href="/">
+                <span class="bi bi-house-door-fill menu-icon">
+                    <span class="menu-name">Home</span>
+                </span>
+            </NavLink>
+            <NavLink class="menu-item main-menu" href="my-profile">
+                <span class="bi bi-person-circle menu-icon">
+                    <span class="menu-name">My Profile</span>
+                </span>
+            </NavLink>
+            <div class="menu-item main-menu" @onclick="ToggleSearchMenu">
+                <span class="bi bi-search menu-icon">
+                    <span class="menu-name">Search</span>
+                </span>
+                @if (collapseSearchMenu)
+                {
+                    <span class="bi bi-chevron-down float-end menu-arrow"></span>
+                }
+                else
+                {
+                    <span class="bi bi-chevron-up float-end menu-arrow"></span>
+                }
+            </div>
+            @if (!collapseSearchMenu)
+            {
+                <div class="submenu">
+                    <NavLink class="menu-item" href="users">
+                        <span class="bi bi-people-fill menu-icon">
+                            <span class="menu-name">All Users</span>
+                        </span>
+                    </NavLink>
+                    <NavLink class="menu-item" href="search-user-by-email">
+                        <span class="bi bi-envelope menu-icon">
+                            <span class="menu-name">By Email</span>
+                        </span>
+                    </NavLink>
+                    <NavLink class="menu-item" href="search-user-by-id">
+                        <span class="bi bi-card-text menu-icon">
+                            <span class="menu-name">By Id</span>
+                        </span>
+                    </NavLink>
+                </div>
+            }
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    bool isExpanded;
+    bool collapseSearchMenu = true;
+
+    private void ExpandSidebar()
+    {
+        isExpanded = true;
+    }
+
+    private void CollapseSidebar()
+    {
+        isExpanded = false;
+    }
+
+    private void CollapseSidebarAndSubmenu()
+    {
+        isExpanded = false;
+        collapseSearchMenu = true;
+    }
+
+    private void ToggleSearchMenu()
+    {
+        collapseSearchMenu = !collapseSearchMenu;
+    }
+
+}
