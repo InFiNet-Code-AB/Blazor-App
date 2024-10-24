@@ -11,77 +11,79 @@
 
 <div class="update-page d-flex vh-100">
     <div class="container">
-        <div class="row justify-content-center text-white">
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-body rounded position-relative" style="background: url('bild-6.jpg') center center; background-size: cover;">
-                        <div class="bg-dark bg-opacity-50 position-absolute top-0 start-0 end-0 bottom-0"></div>
-                        <div class="d-flex flex-column align-items-center position-relative">
-                            <h4 class="text-center font-monospace">Update User</h4>
+        <div class="row justify-content-center">
+            <div class="col-md-6 p-4 w-60">
+                <div class="card" style="background-image: linear-gradient(to right,#b3cde0, #7a9e9f, #4b738e);">
+                    <div class="card-body justify-content-center align-items-center rounded bg-dark bg-opacity-10">
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <!-- Using col-8 for 70% width -->
+                                <h4 class="text-center font-monospace">Update User</h4>
 
-                            <EditForm Model="@updatingUserModel" OnValidSubmit="HandleValidSubmit">
-                                <DataAnnotationsValidator />
-                                <ValidationSummary class="text-danger" />
+                                <EditForm Model="@updatingUserModel" OnValidSubmit="HandleValidSubmit">
+                                    <DataAnnotationsValidator />
+                                    <ValidationSummary class="text-danger" />
 
-                                <div class="mb-3 mt-5">
-                                    <label for="firstName" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">First Name</label>
-                                    <InputText id="firstName" class="form-control border-0 border-bottom border-light text-light bg-transparent"
-                                               @bind-Value="updatingUserModel.FirstName" placeholder="First Name" style="font-size: 12px;" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="lastName" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Last Name</label>
-                                    <InputText id="lastName" class="form-control border-0 border-bottom border-light text-light bg-transparent"
-                                               @bind-Value="updatingUserModel.LastName" placeholder="Last Name" style="font-size: 12px;" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="email" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Email</label>
-                                    <InputText id="email" class="form-control border-0 border-bottom border-light text-light bg-transparent"
-                                               @bind-Value="updatingUserModel.Email" placeholder="Email" style="font-size: 12px;" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="role" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Role</label>
-                                    <InputSelect id="role" @bind-Value="updatingUserModel.Role"
-                                                 class="form-control border-0 border-bottom border-light text-light bg-transparent">
-                                        <option value="">Select a role</option>
-                                        <option value="Teacher">Teacher</option>
-                                        <option value="Student">Student</option>
-                                        <option value="Admin">Admin</option>
-                                    </InputSelect>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="currentPassword" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Current Password</label>
-                                    <InputText id="currentPassword" class="form-control border-0 border-bottom border-light text-light bg-transparent" type="password"
-                                               @bind-Value="updatingUserModel.CurrentPassword" placeholder="Current Password" style="font-size: 12px;" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="newPassword" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">New Password</label>
-                                    <InputText id="newPassword" class="form-control border-0 border-bottom border-light text-light bg-transparent" type="password"
-                                               @bind-Value="updatingUserModel.NewPassword" placeholder="New Password" style="font-size: 12px;" />
-                                </div>
-
-                                <div class="d-grid gap-2 mb-3">
-                                    <button type="submit" class="btn btn-success w-100 btn-lg fs-6 btn-outline-secondary text-black">Update Profile</button>
-                                </div>
-
-                                @if (!string.IsNullOrEmpty(errorMessage))
-                                {
-                                    <div class="alert alert-danger mt-3" role="alert">
-                                        @errorMessage
+                                    <div class="mb-3 mt-5">
+                                        <label for="firstName" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">First Name</label>
+                                        <InputText id="firstName" class="form-control border-0 border-bottom border-dark bg-transparent"
+                                                   @bind-Value="updatingUserModel.FirstName" placeholder="First Name" style="font-size: 12px;" />
                                     </div>
-                                }
 
-                                @if (!string.IsNullOrEmpty(successMessage))
-                                {
-                                    <div class="alert alert-success mt-3" role="alert">
-                                        @successMessage
+                                    <div class="mb-3">
+                                        <label for="lastName" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Last Name</label>
+                                        <InputText id="lastName" class="form-control border-0 border-bottom border-dark bg-transparent"
+                                                   @bind-Value="updatingUserModel.LastName" placeholder="Last Name" style="font-size: 12px;" />
                                     </div>
-                                }
-                            </EditForm>
+
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Email</label>
+                                        <InputText id="email" class="form-control border-0 border-bottom border-dark bg-transparent"
+                                                   @bind-Value="updatingUserModel.Email" placeholder="Email" style="font-size: 12px;" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="role" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Role</label>
+                                        <InputSelect id="role" @bind-Value="updatingUserModel.Role"
+                                                     class="form-control border-0 border-bottom border-dark bg-transparent">
+                                            <option value="">Select a role</option>
+                                            <option value="Teacher">Teacher</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Admin">Admin</option>
+                                        </InputSelect>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="currentPassword" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">Current Password</label>
+                                        <InputText id="currentPassword" class="form-control border-0 border-bottom border-dark bg-transparent" type="password"
+                                                   @bind-Value="updatingUserModel.CurrentPassword" placeholder="Current Password" style="font-size: 12px;" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="newPassword" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 14px;">New Password</label>
+                                        <InputText id="newPassword" class="form-control border-0 border-bottom border-dark bg-transparent" type="password"
+                                                   @bind-Value="updatingUserModel.NewPassword" placeholder="New Password" style="font-size: 12px;" />
+                                    </div>
+
+                                    <div class="d-grid gap-2 mb-3">
+                                        <button type="submit" class="btn btn-success btn-lg fs-6 btn-outline-secondary text-black ">Update Profile</button>
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(errorMessage))
+                                    {
+                                        <div class="alert alert-danger mt-3" role="alert">
+                                            @errorMessage
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(successMessage))
+                                    {
+                                        <div class="alert alert-success mt-3" role="alert">
+                                            @successMessage
+                                        </div>
+                                    }
+                                </EditForm>
+                            </div> <!-- End of col-8 -->
                         </div>
                     </div>
                 </div>
@@ -89,6 +91,7 @@
         </div>
     </div>
 </div>
+
 
 @code {
 
