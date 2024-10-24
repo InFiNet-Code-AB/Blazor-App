@@ -1,0 +1,22 @@
+﻿.register-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.register-image {
+    background-image: url('img/SpaceMan.jpg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 50vh; /* Ensures it occupies the full width of its column */
+    height: 50vh; /* Adjust the height to match the form's area */
+    border-radius: 15px;
+}
+
+.text-dark:hover {
+    color: blue;
+    transition: color 0.3s ease; /* Smooth transition */
+}

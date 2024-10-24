@@ -7,68 +7,64 @@
 @inject IUserServices ApiService;
 @inject NavigationManager Navigation;
 
-<h2 class="text-center mt-5">Registration of user</h2>
-<h3 class="text-center mt-5"> fill in all fields to register user.</h3>
 
-<div class="container mt-4">
-    <!-- Smaller width to the form wrapper -->
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <!-- Adjust column width -->
+
+<div class="register-page d-flex vh-100 bg-white">
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+        <div class="card rounded-3 p-3 w-75">
+            <h2 class="text-center mt-2 mb-4" style="font-size: 1.5rem;">Registration</h2>
+
             <EditForm Model="@model" OnValidSubmit="HandleRegistration">
                 <DataAnnotationsValidator />
 
-                <!-- Create a row for the form fields -->
+                <!-- Role field (full-width) -->
+                <div class="mb-2">
+                    <label for="role" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 12px;">Role</label>
+                    <InputSelect id="role" @bind-Value="model.Role" class="form-control form-control-sm border-0 border-bottom border-dark bg-transparent">
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Student">Student</option>
+                    </InputSelect>
+                </div>
+
+                <!-- First Name and Last Name (side by side) -->
                 <div class="row">
-
-                    <!-- Vänster Column -->
-                    <div class="col-md-6 d-flex flex-column justify-content-center">
-                        <div class="mb-3">
-                            <label for="role">Role</label>
-                            <InputSelect id="role" @bind-Value="model.Role" class="form-control">
-                                <option value="" disabled selected>Select Role</option>
-                                <option value="Teacher">Teacher</option>
-                                <option value="Student">Student</option>
-                            </InputSelect>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="firstName">First Name</label>
-                            <InputText id="firstName" @bind-Value="model.FirstName" class="form-control" />
-                            <ValidationMessage For="@(() => model.FirstName)" />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="lastName">Last Name</label>
-                            <InputText id="lastName" @bind-Value="model.LastName" class="form-control" />
-                            <ValidationMessage For="@(() => model.LastName)" />
-                        </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="firstName" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 12px;">First Name</label>
+                        <InputText id="firstName" @bind-Value="model.FirstName" class="form-control form-control-sm border-0 border-bottom border-dark bg-transparent" />
+                        <ValidationMessage For="@(() => model.FirstName)" />
                     </div>
-
-                    <!-- Höger Column -->
-                    <div class="col-md-6 d-flex flex-column justify-content-center">
-                        <div class="mb-3">
-                            <label for="email">Email</label>
-                            <InputText id="email" @bind-Value="model.Email" class="form-control" />
-                            <ValidationMessage For="@(() => model.Email)" />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password">Password</label>
-                            <InputText id="password" type="password" @bind-Value="model.Password" class="form-control" />
-                            <ValidationMessage For="@(() => model.Password)" />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="confirmPassword">Confirm Password</label>
-                            <InputText id="confirmPassword" type="password" @bind-Value="model.ConfirmPassword" class="form-control" />
-                            <ValidationMessage For="@(() => model.ConfirmPassword)" />
-                        </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="lastName" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 12px;">Last Name</label>
+                        <InputText id="lastName" @bind-Value="model.LastName" class="form-control form-control-sm border-0 border-bottom border-dark bg-transparent" />
+                        <ValidationMessage For="@(() => model.LastName)" />
                     </div>
                 </div>
 
+                <!-- Email field (full-width) -->
+                <div class="mb-2">
+                    <label for="email" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 12px;">Email</label>
+                    <InputText id="email" @bind-Value="model.Email" class="form-control form-control-sm border-0 border-bottom border-dark bg-transparent" placeholder="example@mail.com" />
+                    <ValidationMessage For="@(() => model.Email)" />
+                </div>
+
+                <!-- Password and Confirm Password (side by side) -->
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label for="password" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 12px;">Password</label>
+                        <InputText id="password" type="password" @bind-Value="model.Password" class="form-control form-control-sm border-0 border-bottom border-dark bg-transparent" />
+                        <ValidationMessage For="@(() => model.Password)" />
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="confirmPassword" class="form-label" style="font-family: 'Arial', sans-serif; font-size: 12px;">Confirm Password</label>
+                        <InputText id="confirmPassword" type="password" @bind-Value="model.ConfirmPassword" class="form-control form-control-sm border-0 border-bottom border-dark bg-transparent" />
+                        <ValidationMessage For="@(() => model.ConfirmPassword)" />
+                    </div>
+                </div>
+
+                <!-- Submit button -->
                 <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-success w-100 btn-sm">Sign up+</button>
                 </div>
 
                 @if (!string.IsNullOrWhiteSpace(errorMessage))
@@ -84,10 +80,18 @@
                         <strong>Success:</strong> @successMessage
                     </div>
                 }
+
+                <div class="text-center mt-3">
+                    <a href="/login" class="text-decoration-none text-dark" style="font-size: 12px;">Already have an Account?</a>
+                </div>
             </EditForm>
         </div>
     </div>
+
+    <div class="col-md-6 register-image d-none d-md-block"></div>
 </div>
+
+
 
 @code {
     private RegisterUserDTO model = new RegisterUserDTO();
@@ -111,8 +115,7 @@
             // Reset the form if needed
             model = new RegisterUserDTO();
 
-            // Optionally redirect to the login page after success
-            /*Navigation.NavigateTo("/login");*/
+            Navigation.NavigateTo("/login");
         }
         catch (Exception ex)
         {
