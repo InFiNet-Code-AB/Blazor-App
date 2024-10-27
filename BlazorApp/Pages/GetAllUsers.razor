@@ -11,16 +11,24 @@
 <PageTitle>All Users</PageTitle>
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">User Information</h2>
-
+    <h2 class="text-center mb-4 font-monospace ">User Information</h2>
     <div class="row mb-3">
         <div class="col-md-6">
-            <div class="input-group">
-                <input @bind="searchQuery" class="form-control" placeholder="Search Users..." @onkeypress="HandleKeyPress" />
-                <button class="btn btn-primary" @onclick="PerformSearch">Search</button>
+            <div class="input-group mb-3">
+                <div class="form-floating">
+                    <input @bind="searchQuery"@onkeypress="HandleKeyPress"  
+                        id="search-focus" type="search" class="form-control" placeholder="Search" 
+                        aria-label="Search">
+                    <label for="search-focus">Search</label>
+                </div>
+                <button class="btn btn-primary " type="button" @onclick="PerformSearch">
+                    <i class="bi bi-search"></i>
+
+                </button>
             </div>
         </div>
     </div>
+
 
     @if (result == null)
     {
@@ -38,9 +46,9 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-striped table-hover table-bordered shadow-sm">
-                <thead class="table-dark">
+        <div class="table-responsive mb-5">
+            <table class="table align-middle mb-0 bg-white table-striped ">
+                <thead class="table">
                     <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
