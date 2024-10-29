@@ -1,7 +1,69 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="home-page d-flex flex-column min-vh-100">
+    <div class="header d-flex align-items-center justify-content-center text-light rounded-3"
+         style="background-color:#21335b;">
+         <div id="logo">
+             <a href="/">
+                     <img src="img/HomePageLogo.png" class="header-image"/>
+             </a>
+         </div>
+        <h1 class="page-title justify-content-center">Welcome to Blazor Dojo Education</h1>
+    </div>
+    <main class="main-content container my-4 bg-light p-4 rounded shadow-sm">
+        <section class="intro-section text-center mb-4">
+            <h2 class="text-center mt-2 mb-3 section-title fw-semibold" style="font-size: 1.5rem;">A Place to Grow and Succeed</h2>
+            <p class="intro-text font-monospac  fst-italic">
+                At our school, we believe in nurturing the potential within each student. Whether you are looking to
+                advance your knowledge, gain new skills, or simply find a community that supports your growth, we are
+                here for you. Become a better you with our diverse range of courses and dedicated teachers.
+            </p>
+        </section>
 
-Welcome to your new app.
+        <section class="action-section row text-center">
+            <div class="action-box col-md-6 p-3">
+                <div class="card shadow-sm border-0 rounded">
+                    <div class="card-body">
+                        <h3 class="action-title fw-semibold">Apply for Courses</h3>
+                        <p class="action-text  fst-italic">
+                            Ready to take the next step in your education? Explore our wide selection of courses designed to
+                            help you achieve your goals.
+                        </p>
+                        <a href="/courses" class="btn btn-success w-100">Explore Courses</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-box col-md-6 p-3">
+                <div class="card shadow-sm border-0 rounded">
+                    <div class="card-body">
+                        <h3 class="action-title fw-semibold">Register as a New User</h3>
+                        <p class="action-text  fst-italic">
+                            Join our community and start your learning journey today. Registration is quick and easy, and
+                            you’ll gain access to all our resources.
+                        </p>
+                        <a href="/register" class="btn btn-primary w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits-section mt-5">
+            <h2 class="section-title text-center fw-semibold">Why Choose Us?</h2>
+            <ul class="benefits-list list-unstyled text-center mt-3">
+                <li class="benefit-item mb-2"><i class="bi bi-person-check-fill"></i> Personalized Learning Experience</li>
+                <li class="benefit-item mb-2"><i class="bi bi-briefcase-fill"></i> Expert Instructors with Real-World Experience</li>
+                <li class="benefit-item mb-2"><i class="bi bi-calendar-check-fill"></i> Flexible Learning Schedules</li>
+                <li class="benefit-item mb-2"><i class="bi bi-people-fill"></i> Supportive Community</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="footer bg-dark text-center py-3">
+        <p class="mb-0" style="color: white;">© 2024 Our School. All Rights Reserved.</p>
+    </footer>
+
+</div>
+
+
