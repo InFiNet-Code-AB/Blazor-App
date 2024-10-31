@@ -5,20 +5,64 @@
 @inject ILocalStorageService LocalStorage
 
 <div class="page">
-    <Sidebar></Sidebar>
-
     <main>
-        <div class="top-row px-4">
-            @if (isAuthenticated)
-            {
-                <a href="/logout" class="btn btn-danger" style=" font-family: 'Arial', sans-serif; font-size: 14px;"><i class="bi bi-box-arrow-right"></i>  Logout</a>
-            }
-            else
-            {
-                <a href="/login" class="btn btn-success " style=" font-family: 'Arial', sans-serif; font-size: 14px;"><i class="bi bi-box-arrow-in-right"></i> Login</a>
-                <a href="/register" class="btn btn-info" style=" font-family: 'Arial', sans-serif; font-size: 14px;"><i class="bi bi-person-plus"></i> Sign Up</a>
-            }
+        <div class="top-row px-4 d-flex justify-content-between align-items-center">
+            <div class="nav-links">
+                <NavLink class="menu-item main-menu" href="/">
+                    <span class="bi bi-house-door-fill menu-icon" style="font-family: 'Arial', sans-serif; font-size: 14px;">
+                        <span class="menu-name"> Home</span>
+                    </span>
+                </NavLink>
+                @if (isAuthenticated)
+                {
+                    <NavLink class="menu-item main-menu" href="my-profile">
+                        <span class="bi bi-person-circle menu-icon" style="font-family: 'Arial', sans-serif; font-size: 14px;">
+                            <span class="menu-name"> My Profile</span>
+                        </span>
+                    </NavLink>
+                }
+
+                <AuthorizeView Roles="Admin">
+                    <Authorized Context="adminContext">
+                        <NavLink class="menu-item" href="users">
+                            <span class="bi bi-people-fill menu-icon" style="font-family: 'Arial', sans-serif; font-size: 14px;">
+                                <span class="menu-name"> All Users</span>
+                            </span>
+                        </NavLink>
+                        <NavLink class="menu-item" href="search-user-by-email">
+                            <span class="bi bi-envelope menu-icon" style="font-family: 'Arial', sans-serif; font-size: 14px;">
+                                <span class="menu-name"> By Email</span>
+                            </span>
+                        </NavLink>
+                        <NavLink class="menu-item" href="search-user-by-id">
+                            <span class="bi bi-card-text menu-icon" style="font-family: 'Arial', sans-serif; font-size: 14px;">
+                                <span class="menu-name"> By Id</span>
+                            </span>
+                        </NavLink>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+
+            <div>
+                @if (isAuthenticated)
+                {
+                    <a href="/logout" class="btn btn-danger" style="font-family: 'Arial', sans-serif; font-size: 14px;">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                }
+                else
+                {
+                    <a href="/login" class="btn btn-success" style="font-family: 'Arial', sans-serif; font-size: 14px;">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                    <a href="/register" class="btn btn-info" style="font-family: 'Arial', sans-serif; font-size: 14px;">
+                        <i class="bi bi-person-plus"></i> Sign Up
+                    </a>
+                }
+            </div>
         </div>
+
+        <Sidebar></Sidebar>
 
         <article class="content px-4">
             @Body

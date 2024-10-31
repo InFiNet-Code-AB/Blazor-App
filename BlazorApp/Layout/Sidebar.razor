@@ -1,4 +1,4 @@
-﻿<AuthorizeView Roles="Admin, Teacher, Student">
+﻿@* <AuthorizeView Roles="Admin, Teacher, Student">
     <Authorized>
         <div class="container @(isExpanded ? "expand" : "collapse")" @onmouseenter="ExpandSidebar" @onmouseleave="CollapseSidebarAndSubmenu">
             <NavLink class="menu-item main-menu" href="/">
@@ -73,4 +73,4 @@
         collapseSearchMenu = !collapseSearchMenu;
     }
 
-}
+} *@

@@ -1,4 +1,4 @@
-<div class="top-row ps-3 navbar navbar-dark">
+@* <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazorDojoFE</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -30,12 +30,6 @@
                 </div>
             </Authorized>
         </AuthorizeView>
-@* 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="update-user">
-                <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> Update User
-            </NavLink>
-        </div> *@
                
          <AuthorizeView Roles="Admin" >
             <Authorized> 
@@ -78,3 +72,4 @@
         collapseNavMenu = !collapseNavMenu;
     }
 }
+ *@
